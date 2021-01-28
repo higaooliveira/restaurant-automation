@@ -1,12 +1,13 @@
 package com.higor.restaurantautomation.resource.exception
 
-import com.higor.restaurantautomation.domain.DTO.StandardError
+import com.higor.restaurantautomation.domain.dto.StandardError
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 
@@ -16,6 +17,7 @@ class ResourceExceptionHandler {
     lateinit var error: StandardError
 
     @ExceptionHandler(ResourceNotFound::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     fun resourceNotFound(ex: ResourceNotFound, request: HttpServletRequest): ResponseEntity<StandardError> {
         this.messageList.add(ex.message!!)
         this.error = StandardError(this.messageList, request.requestURI, Instant.now())
@@ -24,6 +26,7 @@ class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(ResourceAlreadyExists::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
     fun resourceAlreadyExists(ex: ResourceAlreadyExists, request: HttpServletRequest): ResponseEntity<StandardError>{
         this.messageList.add(ex.message!!)
         this.error = StandardError(this.messageList, request.requestURI, Instant.now())

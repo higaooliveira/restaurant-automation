@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.domain.DTO
+package com.higor.restaurantautomation.domain.dto
 
 import java.time.Instant
 
