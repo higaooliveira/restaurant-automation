@@ -29,6 +29,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-ui:1.5.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("junit:junit:4.13")
 }
 
 tasks.withType<KotlinCompile> {
