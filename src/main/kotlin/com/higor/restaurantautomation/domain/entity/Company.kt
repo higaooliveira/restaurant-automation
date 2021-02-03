@@ -22,4 +22,5 @@ data class Company(
         fun encodePassword(){
                 this.password = PasswordHelper.encode(this.password)
         }
+
 }

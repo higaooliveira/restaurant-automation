@@ -8,7 +8,6 @@ import com.higor.restaurantautomation.domain.respository.CompanyRepository
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
-import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
@@ -27,7 +26,7 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) {
             .findAll()
 
     fun create(createCompanyDto: CreateCompanyDto): Company {
-        if (this.companyRepository.findByEmail(createCompanyDto.email) != null){
+        if (this.companyExistsByEmail(createCompanyDto.email)){
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
         }
 
@@ -39,24 +38,28 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) {
 
     fun update(updateCompanyDto: UpdateCompanyDto): Company {
         val company = this.getCompany(updateCompanyDto.id)
-
         MapperUtils.merge(updateCompanyDto, company)
-
         return this.companyRepository.save(company)
     }
 
     fun updatePassword(updateCompanyPasswordDto: UpdateCompanyPasswordDto): Company {
-        val company = this.getCompany(updateCompanyPasswordDto.id)
+        val company = this.getCompanyByEmail(updateCompanyPasswordDto.email)
         MapperUtils.merge(updateCompanyPasswordDto, company)
         company.encodePassword()
         return this.companyRepository.save(company)
     }
 
-    fun deleteCompany(id: Long) {
+    fun delete(id: Long) {
         try {
             this.companyRepository.deleteById(id)
         }catch (ex: EmptyResultDataAccessException){
             throw ResourceNotFound("Resource Not Found for passed id")
         }
     }
+
+    private fun getCompanyByEmail(email: String): Company = this.companyRepository
+            .findByEmail(email) ?: throw ResourceNotFound("Resource Not Found for passed email")
+
+    private fun companyExistsByEmail(email: String): Boolean = this.companyRepository
+            .findByEmail(email) != null
 }
