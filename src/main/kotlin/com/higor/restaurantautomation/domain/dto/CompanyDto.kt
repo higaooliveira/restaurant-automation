@@ -18,6 +18,6 @@ data class UpdateCompanyDto(
 )
 
 data class UpdateCompanyPasswordDto(
-        val id: Long,
+        val email: String,
         val password: String
 )

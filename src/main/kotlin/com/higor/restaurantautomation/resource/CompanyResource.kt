@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.websocket.server.PathParam
 
 
 @RestController
@@ -58,7 +57,7 @@ class CompanyResource (@Autowired val companyService: CompanyService){
 
     @DeleteMapping("/company/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Company> {
-        this.companyService.deleteCompany(id)
+        this.companyService.delete(id)
 
         return ResponseEntity.noContent().build()
     }

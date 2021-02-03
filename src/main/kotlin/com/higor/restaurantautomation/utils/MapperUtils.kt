@@ -14,8 +14,6 @@ class Mapper: ModelMapper() {
         configuration.isSkipNullEnabled = true
     }
 
-
-
 }
 
 object MapperUtils{
@@ -24,5 +22,4 @@ object MapperUtils{
     inline fun <S, reified T> convert(source: S): T = mapper.map(source, T::class.java)
 
     inline fun <S, reified T> merge(source: S, target: T) = mapper.map(source, target)
-
 }
