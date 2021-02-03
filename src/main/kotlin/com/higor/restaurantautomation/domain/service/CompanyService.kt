@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyPasswordDto
 import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.respository.CompanyRepository
+import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
@@ -15,41 +16,41 @@ import org.springframework.stereotype.Service
 
 @Component
 @Service
-class CompanyService(@Autowired val companyRepository: CompanyRepository) {
+class CompanyService(@Autowired val companyRepository: CompanyRepository) : CompanyServiceContract{
 
-    fun getCompany(id: Long): Company = this.companyRepository
+    override fun getById(id: Long): Company = this.companyRepository
             .findById(id)
             .orElseThrow { ResourceNotFound("Resource Not Found for passed id")}
 
 
-    fun getAllCompanies(): List<Company> = this.companyRepository
+    override fun getAll(): List<Company> = this.companyRepository
             .findAll()
 
-    fun create(createCompanyDto: CreateCompanyDto): Company {
-        if (this.companyExistsByEmail(createCompanyDto.email)){
+    override fun create(createDto: CreateCompanyDto): Company {
+        if (this.companyExistsByEmail(createDto.email)){
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
         }
 
-        val company = MapperUtils.convert<CreateCompanyDto, Company>(createCompanyDto)
+        val company = MapperUtils.convert<CreateCompanyDto, Company>(createDto)
         company.encodePassword()
 
         return this.companyRepository.save(company)
     }
 
-    fun update(updateCompanyDto: UpdateCompanyDto): Company {
-        val company = this.getCompany(updateCompanyDto.id)
-        MapperUtils.merge(updateCompanyDto, company)
+    override fun update(updateDto: UpdateCompanyDto): Company {
+        val company = this.getById(updateDto.id)
+        MapperUtils.merge(updateDto, company)
         return this.companyRepository.save(company)
     }
 
-    fun updatePassword(updateCompanyPasswordDto: UpdateCompanyPasswordDto): Company {
-        val company = this.getCompanyByEmail(updateCompanyPasswordDto.email)
-        MapperUtils.merge(updateCompanyPasswordDto, company)
+    override fun updatePassword(updateDto: UpdateCompanyPasswordDto): Company {
+        val company = this.getCompanyByEmail(updateDto.email)
+        MapperUtils.merge(updateDto, company)
         company.encodePassword()
         return this.companyRepository.save(company)
     }
 
-    fun delete(id: Long) {
+    override fun delete(id: Long) {
         try {
             this.companyRepository.deleteById(id)
         }catch (ex: EmptyResultDataAccessException){

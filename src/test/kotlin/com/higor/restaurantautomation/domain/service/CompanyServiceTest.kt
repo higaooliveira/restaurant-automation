@@ -4,7 +4,6 @@ import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.respository.CompanyRepository
-import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -39,7 +38,7 @@ class CompanyServiceTest {
         )
         BDDMockito.`when`(this.repository.findById(1L)).thenReturn(expectedCompany)
 
-        val returnedCompany = this.companyService.getCompany(1L)
+        val returnedCompany = this.companyService.getById(1L)
         Assertions.assertEquals(expectedCompany.get(), returnedCompany)
         Assertions.assertEquals(expectedCompany.get().id, returnedCompany.id)
     }
@@ -52,7 +51,7 @@ class CompanyServiceTest {
         )
         BDDMockito.`when`(this.repository.findAll()).thenReturn(expectedCompaniesList)
 
-        val companiesList = this.companyService.getAllCompanies()
+        val companiesList = this.companyService.getAll()
         Assertions.assertEquals(expectedCompaniesList, companiesList)
     }
 
