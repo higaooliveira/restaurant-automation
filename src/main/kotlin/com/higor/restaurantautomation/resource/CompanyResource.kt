@@ -4,7 +4,6 @@ import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyPasswordDto
 import com.higor.restaurantautomation.domain.entity.Company
-import com.higor.restaurantautomation.domain.service.CompanyService
 import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
 import com.higor.restaurantautomation.utils.HateoasHelper
 import org.springframework.beans.factory.annotation.Autowired

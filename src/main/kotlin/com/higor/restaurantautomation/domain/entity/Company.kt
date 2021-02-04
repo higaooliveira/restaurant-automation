@@ -17,7 +17,11 @@ data class Company(
         @JsonIgnore
         var password: String,
         val phone: String,
-        val document: String
+        val document: String,
+
+        @OneToMany(mappedBy = "company")
+        @JsonIgnore
+        var boards: List<Board> = ArrayList()
 ){
         fun encodePassword(){
                 this.password = PasswordHelper.encode(this.password)
