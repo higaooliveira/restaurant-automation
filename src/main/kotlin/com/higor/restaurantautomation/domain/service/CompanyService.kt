@@ -26,7 +26,6 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
     override fun getAll(): List<Company> = this.companyRepository
             .findAll()
 
-
     override fun create(createDto: CreateCompanyDto): Company {
         if (this.companyExistsByEmail(createDto.email)){
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
@@ -52,7 +51,6 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
     }
 
     override fun delete(id: Long) {
-
         try {
             this.companyRepository.deleteById(id)
         }catch (ex: EmptyResultDataAccessException){
