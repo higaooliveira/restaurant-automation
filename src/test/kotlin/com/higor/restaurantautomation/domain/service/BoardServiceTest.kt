@@ -11,16 +11,21 @@ import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.ContextConfiguration
 import java.util.*
 
 @SpringBootTest
+@ContextConfiguration(classes=[BoardService::class])
 class BoardServiceTest {
 
     @MockBean
     lateinit var repository: BoardRepository
 
+    @MockBean
+    lateinit var companyService: CompanyService
+
     @Autowired
-    lateinit var service: BoardServiceContract
+    lateinit var service: BoardService
 
     @Test
     fun getBoardTest() {

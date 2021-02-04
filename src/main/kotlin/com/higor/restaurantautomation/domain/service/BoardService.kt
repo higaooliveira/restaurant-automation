@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class BoardService(@Autowired val boardRepository: BoardRepository,
-                   @Autowired val companyService: CompanyServiceContract): BoardServiceContract {
+                   @Autowired val companyService: CompanyService): BoardServiceContract {
 
     override fun getById(id: Long): Board = this.boardRepository
             .findById(id)
