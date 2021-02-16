@@ -1,11 +1,14 @@
 package com.higor.restaurantautomation.domain.service
 
+import com.higor.restaurantautomation.domain.dto.CreateBoardDto
+import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.repository.BoardRepository
 import com.higor.restaurantautomation.domain.service.contracts.BoardServiceContract
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.BDDMockito
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
@@ -47,6 +50,20 @@ class BoardServiceTest {
         val actualBoardList = this.service.getAll()
         Assertions.assertEquals(expectedBoardList, actualBoardList)
     }
+
+    @Test
+    fun createBoardTest() {
+        val boardDto = CreateBoardDto(1L, 1L)
+        val company = Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456")
+        val expectedBoard = Board(1L, 1L, "/Users/higaooliveira/Desktop/board_1_1.png", company)
+        BDDMockito.`when`(this.companyService.getById(1L)).thenReturn(company)
+
+        BDDMockito.`when`(this.repository.save(ArgumentMatchers.any(Board::class.java))).thenReturn(expectedBoard)
+        val returnedBoard = this.service.create(boardDto)
+
+        Assertions.assertEquals(expectedBoard, returnedBoard)
+    }
+
 
     @Test
     fun deleteBookTest(){
