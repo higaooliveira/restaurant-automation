@@ -17,7 +17,7 @@ class QrCodeWriter(private val writer: QRCodeWriter): Writable {
     companion object {
         const val QR_CODE_WIDTH = 350
         const val QR_CODE_HEIGHT = 350
-        const val PATH = "/Users/higaooliveira/Desktop/"
+        const val PATH = "/tmp/"
         const val EXTENSION = ".png"
         fun factory(): QrCodeWriter = QrCodeWriter(QRCodeWriter())
     }

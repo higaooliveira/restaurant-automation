@@ -55,7 +55,7 @@ class BoardServiceTest {
     fun createBoardTest() {
         val boardDto = CreateBoardDto(1L, 1L)
         val company = Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456")
-        val expectedBoard = Board(1L, 1L, "/Users/higaooliveira/Desktop/board_1_1.png", company)
+        val expectedBoard = Board(1L, 1L, "/tmp/board_1_1.png", company)
         BDDMockito.`when`(this.companyService.getById(1L)).thenReturn(company)
 
         BDDMockito.`when`(this.repository.save(ArgumentMatchers.any(Board::class.java))).thenReturn(expectedBoard)
