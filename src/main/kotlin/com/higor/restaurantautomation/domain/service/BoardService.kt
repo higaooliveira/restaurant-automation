@@ -11,9 +11,11 @@ import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceCon
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
+import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
+import java.io.IOException
 
 @Service
 class BoardService(@Autowired val boardRepository: BoardRepository,
@@ -31,9 +33,14 @@ class BoardService(@Autowired val boardRepository: BoardRepository,
         if (this.boardExists(createDto.number, company)){
             throw ResourceAlreadyExists("Resource already exists")
         }
-        val board = Board(number = createDto.number, company = company)
 
-        return this.boardRepository.save(board)
+        var board = MapperUtils.convert<CreateBoardDto, Board>(createDto)
+        board.company = company
+
+        board.qrCodeLink = this.getQRCodeLink(board)
+        board = this.boardRepository.save(board)
+        this.generateQrCode(board)
+        return board
     }
 
     override fun delete(id: Long) {
@@ -44,5 +51,14 @@ class BoardService(@Autowired val boardRepository: BoardRepository,
         }
     }
 
+    private fun generateQrCode(board: Board) {
+        val content = MapperUtils.toJson(board) ?: throw IOException("An error occurred while trying to process your request")
+        QrCodeWriter.factory().write(board.qrCodeLink, content)
+    }
+
     private fun boardExists(number: Long, company: Company): Boolean = this.boardRepository.findByNumberAndCompany(number, company) != null
+
+    private fun getQRCodeLink(board: Board): String = QrCodeWriter.PATH
+            .plus("board_".plus(board.number).plus("_").plus(board.company!!.id))
+            .plus(QrCodeWriter.EXTENSION)
 }
