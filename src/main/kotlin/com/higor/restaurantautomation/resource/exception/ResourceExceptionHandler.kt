@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
+import java.io.IOException
 import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 
@@ -32,5 +33,14 @@ class ResourceExceptionHandler {
         this.error = StandardError(this.messageList, request.requestURI, Instant.now())
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(this.error)
+    }
+
+    @ExceptionHandler(IOException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun ioException(ex: IOException, request: HttpServletRequest): ResponseEntity<StandardError>{
+        this.messageList.add(ex.message!!)
+        this.error = StandardError(this.messageList, request.requestURI, Instant.now())
+
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(this.error)
     }
 }
