@@ -19,9 +19,11 @@ data class Company(
         val phone: String,
         val document: String,
 
-        @OneToMany(mappedBy = "company")
+        @OneToMany(mappedBy = "company",
+                fetch = FetchType.LAZY,
+                cascade = [CascadeType.ALL])
         @JsonIgnore
-        var boards: List<Board> = ArrayList()
+        var boards: Set<Board> = HashSet()
 ){
         fun encodePassword(){
                 this.password = PasswordHelper.encode(this.password)
