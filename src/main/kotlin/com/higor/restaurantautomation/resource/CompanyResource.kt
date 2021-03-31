@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-class CompanyResource (@Autowired val companyService: CompanyServiceContract){
+class CompanyResource (@Autowired private val companyService: CompanyServiceContract){
 
     @GetMapping("/company")
     fun getAllCompany() : ResponseEntity<List<Company>> {

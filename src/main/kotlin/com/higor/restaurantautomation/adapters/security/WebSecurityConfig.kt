@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.config
+package com.higor.restaurantautomation.adapters.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

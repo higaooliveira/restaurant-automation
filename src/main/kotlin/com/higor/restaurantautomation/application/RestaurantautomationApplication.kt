@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation
+package com.higor.restaurantautomation.application
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

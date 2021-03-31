@@ -1,13 +1,10 @@
 package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.domain.dto.CreateBoardDto
-import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
-import com.higor.restaurantautomation.domain.repository.BoardRepository
-import com.higor.restaurantautomation.domain.respository.CompanyRepository
+import com.higor.restaurantautomation.adapters.repository.BoardRepository
 import com.higor.restaurantautomation.domain.service.contracts.BoardServiceContract
-import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
@@ -15,11 +12,14 @@ import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
-import java.io.IOException
+
 
 @Service
-class BoardService(@Autowired val boardRepository: BoardRepository,
-                   @Autowired val companyService: CompanyService): BoardServiceContract {
+class BoardService(
+        @Autowired val boardRepository: BoardRepository,
+        @Autowired val companyService: CompanyService,
+        @Autowired private val qrCodeWriter: QrCodeWriter
+): BoardServiceContract {
 
     override fun getById(id: Long): Board = this.boardRepository
             .findById(id)
@@ -52,8 +52,8 @@ class BoardService(@Autowired val boardRepository: BoardRepository,
     }
 
     private fun generateQrCode(board: Board) {
-        val content = MapperUtils.toJson(board) ?: throw IOException("An error occurred while trying to process your request")
-        QrCodeWriter.factory().write(board.qrCodeLink, content)
+        val content = "${board.company}_${board.id}_${board.number}"
+        qrCodeWriter.write(board.qrCodeLink, content)
     }
 
     private fun boardExists(number: Long, company: Company): Boolean = this.boardRepository.findByNumberAndCompany(number, company) != null

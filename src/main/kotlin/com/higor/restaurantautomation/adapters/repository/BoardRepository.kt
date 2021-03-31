@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.domain.repository
+package com.higor.restaurantautomation.adapters.repository
 
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company

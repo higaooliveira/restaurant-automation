@@ -16,18 +16,17 @@ import org.springframework.stereotype.Service
 
 @Component
 @Service
-class CompanyService(@Autowired val companyRepository: CompanyRepository) : CompanyServiceContract{
+class CompanyService(@Autowired val companyRepository: CompanyRepository) : CompanyServiceContract {
 
     override fun getById(id: Long): Company = this.companyRepository
-            .findById(id)
-            .orElseThrow { ResourceNotFound("Resource Not Found for passed id")}
-
+        .findById(id)
+        .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
     override fun getAll(): List<Company> = this.companyRepository
-            .findAll()
+        .findAll()
 
     override fun create(createDto: CreateCompanyDto): Company {
-        if (this.companyExistsByEmail(createDto.email)){
+        if (this.companyExistsByEmail(createDto.email)) {
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
         }
 
@@ -53,14 +52,14 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
     override fun delete(id: Long) {
         try {
             this.companyRepository.deleteById(id)
-        }catch (ex: EmptyResultDataAccessException){
+        } catch (ex: EmptyResultDataAccessException) {
             throw ResourceNotFound("Resource Not Found for passed id")
         }
     }
 
     private fun getCompanyByEmail(email: String): Company = this.companyRepository
-            .findByEmail(email) ?: throw ResourceNotFound("Resource Not Found for passed email")
+        .findByEmail(email) ?: throw ResourceNotFound("Resource Not Found for passed email")
 
     private fun companyExistsByEmail(email: String): Boolean = this.companyRepository
-            .findByEmail(email) != null
+        .findByEmail(email) != null
 }

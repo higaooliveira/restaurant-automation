@@ -20,6 +20,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -28,6 +29,8 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-ui:1.5.2")
 	implementation("com.google.zxing:core:3.3.2")
 	implementation("com.google.zxing:javase:3.3.2")
+	implementation("io.jsonwebtoken:jjwt:0.7.0")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("junit:junit:4.13")
