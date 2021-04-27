@@ -17,9 +17,10 @@ import org.springframework.stereotype.Service
 @Service
 class BoardService(
         @Autowired val boardRepository: BoardRepository,
-        @Autowired val companyService: CompanyService,
-        @Autowired private val qrCodeWriter: QrCodeWriter
+        @Autowired val companyService: CompanyService
 ): BoardServiceContract {
+    private val qrCodeWriter = QrCodeWriter()
+
 
     override fun getById(id: Long): Board = this.boardRepository
             .findById(id)

@@ -21,3 +21,12 @@ data class UpdateCompanyPasswordDto(
         val email: String,
         val password: String
 )
+
+data class CompanyLoginDto(
+        val email: String,
+        val password: String
+)
+
+data class CompanyLoggedInDto(
+        val accessToken: String
+)
