@@ -1,9 +1,10 @@
 package com.higor.restaurantautomation.domain.service.contracts
 
+import java.util.UUID
 
 interface Crudable<T> {
 
-    fun getById(id: Long): T
+    fun getById(id: UUID): T
     fun getAll(): List<T>
-    fun delete(id: Long)
+    fun delete(id: UUID)
 }

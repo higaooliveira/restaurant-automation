@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api")
@@ -22,7 +23,7 @@ class BoardResource(@Autowired private val boardService: BoardServiceContract) {
     fun getAllBoards(): ResponseEntity<List<Board>> = ResponseEntity.ok(this.boardService.getAll())
 
     @GetMapping("/board/{id}")
-    fun getCompany(@PathVariable id: Long): ResponseEntity<Board> = ResponseEntity.ok(this.boardService.getById(id))
+    fun getCompany(@PathVariable id: UUID): ResponseEntity<Board> = ResponseEntity.ok(this.boardService.getById(id))
 
     @PostMapping("/board")
     fun create(@RequestBody createDto: CreateBoardDto): ResponseEntity<Board> {
@@ -34,7 +35,7 @@ class BoardResource(@Autowired private val boardService: BoardServiceContract) {
     }
 
     @DeleteMapping("/board/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Board> {
+    fun delete(@PathVariable id: UUID): ResponseEntity<Board> {
         this.boardService.delete(id)
 
         return ResponseEntity.noContent().build()

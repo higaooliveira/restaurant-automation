@@ -1,18 +1,22 @@
 package com.higor.restaurantautomation.domain.entity
 
-import javax.persistence.*
+import java.util.UUID
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.Table
 
 @Entity
 @Table(name = "board")
-data class Board (
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long? = null,
+data class Board(
+    @Id
+    val id: UUID = UUID.randomUUID(),
 
-        val number: Long,
-        var qrCodeLink: String = "",
+    val number: Long,
+    var qrCodeLink: String = "",
 
-        @ManyToOne
-        @JoinColumn(name = "company_id")
-        var company: Company? = null
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    var company: Company? = null
 )
