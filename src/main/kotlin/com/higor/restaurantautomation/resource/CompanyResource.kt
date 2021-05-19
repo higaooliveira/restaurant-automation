@@ -8,7 +8,15 @@ import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceCon
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestAttribute
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
@@ -33,8 +41,8 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
 
     @PutMapping("/company")
     fun update(
-            @RequestBody updateDto: UpdateCompanyDto,
-            @RequestAttribute("companyId") id: UUID
+        @RequestBody updateDto: UpdateCompanyDto,
+        @RequestAttribute("companyId") id: UUID
     ): ResponseEntity<Company> {
         updateDto.id = id
         val company = this.companyService.update(updateDto)
@@ -46,8 +54,8 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
 
     @PatchMapping("/company/password")
     fun updatePassword(
-            @RequestBody updateDto: UpdateCompanyPasswordDto,
-            @RequestAttribute("companyId") id: UUID
+        @RequestBody updateDto: UpdateCompanyPasswordDto,
+        @RequestAttribute("companyId") id: UUID
     ): ResponseEntity<Company> {
         updateDto.id = id
         val company = this.companyService.updatePassword(updateDto)

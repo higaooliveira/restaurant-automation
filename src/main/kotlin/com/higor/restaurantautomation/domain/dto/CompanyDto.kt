@@ -26,8 +26,8 @@ data class UpdateCompanyDto(
 )
 
 data class UpdateCompanyPasswordDto(
-        var id: UUID? = null,
-        val password: String
+    var id: UUID? = null,
+    val password: String
 )
 
 data class CompanyLoginDto(

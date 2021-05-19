@@ -5,6 +5,5 @@ import java.util.UUID
 interface Crudable<T> {
 
     fun getById(id: UUID): T
-    fun getAll(): List<T>
     fun delete(id: UUID)
 }

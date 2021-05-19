@@ -7,4 +7,6 @@ import java.util.UUID
 
 interface BoardRepository : JpaRepository<Board, UUID> {
     fun findByNumberAndCompany(number: Long, company: Company): Board?
+
+    fun findAllByCompanyId(companyId: UUID): List<Board>
 }

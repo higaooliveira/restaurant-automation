@@ -25,9 +25,6 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
-    override fun getAll(): List<Company> = this.companyRepository
-        .findAll()
-
     override fun create(createDto: CreateCompanyDto): Company {
         if (this.companyExistsByEmail(createDto.email)) {
             throw ResourceAlreadyExists("Resource Already exists for the passed email")

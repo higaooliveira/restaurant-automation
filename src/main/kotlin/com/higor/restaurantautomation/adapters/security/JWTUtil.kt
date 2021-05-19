@@ -11,7 +11,7 @@ class JWTUtil {
 
     private val secret = "SECRET"
 
-    private val expiration: Long = 60000
+    private val expiration: Long = 600000000000
 
     fun generateToken(username: String): String = Jwts.builder()
         .setSubject(username)

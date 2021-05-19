@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import java.nio.file.FileSystems
 
 @Component
-class QrCodeWriter(@Autowired private val writer: QRCodeWriter): Writable {
+class QrCodeWriter(@Autowired private val writer: QRCodeWriter) : Writable {
 
     override fun write(filePath: String, content: String) {
         val bitMatrix = this.writer.encode(content, BarcodeFormat.QR_CODE, QR_CODE_WIDTH, QR_CODE_HEIGHT)

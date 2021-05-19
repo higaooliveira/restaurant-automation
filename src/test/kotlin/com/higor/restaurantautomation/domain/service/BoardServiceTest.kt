@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
-import java.util.*
+import java.util.Optional
+import java.util.UUID
 
 @SpringBootTest
 @ContextConfiguration(classes = [BoardService::class])
@@ -79,7 +80,7 @@ class BoardServiceTest {
         val company = Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
         val expectedBoard = Optional.of(Board(id, 1L, "www.foobar.com.br", company))
         BDDMockito.`when`(repository.findById(id)).thenReturn(expectedBoard)
-        service.delete(expectedBoard.get().id!!)
+        service.delete(expectedBoard.get().id)
         BDDMockito.verify(repository, Mockito.times(1)).deleteById(expectedBoard.get().id)
     }
 }

@@ -1,7 +1,11 @@
 package com.higor.restaurantautomation.domain.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.UUID
 import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
@@ -11,12 +15,14 @@ import javax.persistence.Table
 @Table(name = "board")
 data class Board(
     @Id
-    val id: UUID = UUID.randomUUID(),
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: UUID,
 
     val number: Long,
     var qrCodeLink: String = "",
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    var company: Company? = null
+    @JsonIgnore
+    var company: Company
 )

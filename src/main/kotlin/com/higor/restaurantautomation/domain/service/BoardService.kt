@@ -25,11 +25,11 @@ class BoardService(
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
-    override fun getAll(): List<Board> = this.boardRepository
-        .findAll()
+    override fun getAll(companyId: UUID): List<Board> = this.boardRepository
+        .findAllByCompanyId(companyId)
 
     override fun create(createDto: CreateBoardDto): Board {
-        val company = this.companyService.getById(createDto.companyId)
+        val company = this.companyService.getById(createDto.companyId!!)
         if (this.boardExists(createDto.number, company)) {
             throw ResourceAlreadyExists("Resource already exists")
         }
@@ -38,7 +38,9 @@ class BoardService(
         board.company = company
 
         board.qrCodeLink = this.getQRCodeLink(board)
+
         board = this.boardRepository.save(board)
+
         this.generateQrCode(board)
         return board
     }
@@ -56,9 +58,10 @@ class BoardService(
         qrCodeWriter.write(board.qrCodeLink, content)
     }
 
-    private fun boardExists(number: Long, company: Company): Boolean = this.boardRepository.findByNumberAndCompany(number, company) != null
+    private fun boardExists(number: Long, company: Company): Boolean =
+        this.boardRepository.findByNumberAndCompany(number, company) != null
 
     private fun getQRCodeLink(board: Board): String = QrCodeWriter.PATH
-        .plus("board_".plus(board.number).plus("_").plus(board.company!!.id))
+        .plus("board_".plus(board.number).plus("_").plus(board.company.id))
         .plus(QrCodeWriter.EXTENSION)
 }
