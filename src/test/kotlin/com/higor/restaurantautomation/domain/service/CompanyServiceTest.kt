@@ -1,9 +1,9 @@
 package com.higor.restaurantautomation.domain.service
 
+import com.higor.restaurantautomation.adapters.repository.CompanyRepository
 import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.entity.Company
-import com.higor.restaurantautomation.domain.respository.CompanyRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
@@ -12,13 +12,11 @@ import org.mockito.Mockito.times
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import java.util.*
-
 import org.springframework.test.context.ContextConfiguration
-
+import java.util.UUID
 
 @SpringBootTest
-@ContextConfiguration(classes=[CompanyService::class])
+@ContextConfiguration(classes = [CompanyService::class])
 class CompanyServiceTest {
 
     @MockBean
@@ -29,19 +27,20 @@ class CompanyServiceTest {
 
     @Test
     fun getCompanyTest() {
+        val id = UUID.randomUUID()
         val expectedCompany = Optional.of(
-                Company(
-                        1L,
-                        "John Doe",
-                        "johndoe@mock.com",
-                        "123456",
-                        "123456",
-                        "123456"
-                )
+            Company(
+                id,
+                "John Doe",
+                "johndoe@mock.com",
+                "123456",
+                "123456",
+                "123456"
+            )
         )
-        BDDMockito.`when`(this.repository.findById(1L)).thenReturn(expectedCompany)
+        BDDMockito.`when`(this.repository.findById(id)).thenReturn(expectedCompany)
 
-        val returnedCompany = this.companyService.getById(1L)
+        val returnedCompany = this.companyService.getById(id)
 
         Assertions.assertEquals(expectedCompany.get(), returnedCompany)
         Assertions.assertEquals(expectedCompany.get().id, returnedCompany.id)
@@ -49,9 +48,10 @@ class CompanyServiceTest {
 
     @Test
     fun getAllCompaniesTest() {
+        val id = UUID.randomUUID()
         val expectedCompaniesList = listOf(
-                Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456"),
-                Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456")
+            Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456"),
+            Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
         )
         BDDMockito.`when`(this.repository.findAll()).thenReturn(expectedCompaniesList)
 
@@ -62,8 +62,9 @@ class CompanyServiceTest {
 
     @Test
     fun createCompanyTest() {
-        val companyDto = CreateCompanyDto("John Doe","johndoe@mock.com","123456","123456","123456")
-        val expectedCompany = Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456")
+        val id = UUID.randomUUID()
+        val companyDto = CreateCompanyDto("John Doe", "johndoe@mock.com", "123456", "123456", "123456")
+        val expectedCompany = Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
 
         BDDMockito.`when`(this.repository.save(any(Company::class.java))).thenReturn(expectedCompany)
         val returnedCompany = this.companyService.create(companyDto)
@@ -72,11 +73,12 @@ class CompanyServiceTest {
     }
 
     @Test
-    fun updateCompanyTest(){
-        val company = Optional.of(Company(1L, "John Doe","johndoe@mock.com","123456","123456","123456"))
-        val expectedUpdatedCompany = Company(1L, "Foo bar","foobar@mock.com","78910","78910","78910")
-        val updateCompanyDto = UpdateCompanyDto(1L, "Foo bar","foobar@mock.com","78910","78910")
-        BDDMockito.`when`(this.repository.findById(1L)).thenReturn(company)
+    fun updateCompanyTest() {
+        val id = UUID.randomUUID()
+        val company = Optional.of(Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456"))
+        val expectedUpdatedCompany = Company(id, "Foo bar", "foobar@mock.com", "78910", "78910", "78910")
+        val updateCompanyDto = UpdateCompanyDto(id, "Foo bar", "foobar@mock.com", "78910", "78910")
+        BDDMockito.`when`(this.repository.findById(id)).thenReturn(company)
         BDDMockito.`when`(this.repository.save(any(Company::class.java))).thenReturn(expectedUpdatedCompany)
 
         val returnedCompany = this.companyService.update(updateCompanyDto)
@@ -84,10 +86,11 @@ class CompanyServiceTest {
     }
 
     @Test
-    fun deleteCompanyTest(){
-        val company = Optional.of(Company(1L, "John Doe","johndoe@mock.com","123456","123456","123456"))
-        BDDMockito.`when`(this.repository.findById(1L)).thenReturn(company)
-        this.companyService.delete(company.get().id!!)
-        BDDMockito.verify(this.repository, times(1)).deleteById(company.get().id!!)
+    fun deleteCompanyTest() {
+        val id = UUID.randomUUID()
+        val company = Optional.of(Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456"))
+        BDDMockito.`when`(this.repository.findById(id)).thenReturn(company)
+        this.companyService.delete(company.get().id)
+        BDDMockito.verify(this.repository, times(1)).deleteById(company.get().id)
     }
 }
