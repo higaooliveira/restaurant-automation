@@ -18,7 +18,7 @@ data class CompanyResponse(
 )
 
 data class UpdateCompanyDto(
-    val id: UUID,
+    var id: UUID? = null,
     val name: String? = null,
     val email: String? = null,
     val phone: String? = null,
@@ -26,8 +26,8 @@ data class UpdateCompanyDto(
 )
 
 data class UpdateCompanyPasswordDto(
-    val email: String,
-    val password: String
+        var id: UUID? = null,
+        val password: String
 )
 
 data class CompanyLoginDto(

@@ -40,13 +40,13 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
     }
 
     override fun update(updateDto: UpdateCompanyDto): Company {
-        val company = this.getById(updateDto.id)
+        val company = this.getById(updateDto.id!!)
         MapperUtils.merge(updateDto, company)
         return this.companyRepository.save(company)
     }
 
     override fun updatePassword(updateDto: UpdateCompanyPasswordDto): Company {
-        val company = this.getCompanyByEmail(updateDto.email)
+        val company = this.getById(updateDto.id!!)
         MapperUtils.merge(updateDto, company)
         company.encodePassword()
         return this.companyRepository.save(company)
@@ -65,9 +65,6 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
 
         return CompanyDetails(company)
     }
-
-    private fun getCompanyByEmail(email: String): Company = this.companyRepository
-        .findByEmail(email) ?: throw ResourceNotFound("Resource Not Found for passed email")
 
     private fun companyExistsByEmail(email: String): Boolean = this.companyRepository
         .findByEmail(email) != null
