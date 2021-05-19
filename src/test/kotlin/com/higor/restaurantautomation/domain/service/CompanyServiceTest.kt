@@ -14,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import java.util.UUID
+
 import java.util.Optional
+
 
 @SpringBootTest
 @ContextConfiguration(classes = [CompanyService::class])
@@ -46,7 +48,6 @@ class CompanyServiceTest {
         Assertions.assertEquals(expectedCompany.get(), returnedCompany)
         Assertions.assertEquals(expectedCompany.get().id, returnedCompany.id)
     }
-
 
     @Test
     fun createCompanyTest() {

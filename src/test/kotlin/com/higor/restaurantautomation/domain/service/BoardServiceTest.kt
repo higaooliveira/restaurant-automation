@@ -55,6 +55,7 @@ class BoardServiceTest {
         BDDMockito.`when`(repository.findAll()).thenReturn(expectedBoardList)
 
         val actualBoardList = service.getAll(company.id)
+
         Assertions.assertEquals(expectedBoardList, actualBoardList)
     }
 
