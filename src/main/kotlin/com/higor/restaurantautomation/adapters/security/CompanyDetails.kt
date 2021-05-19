@@ -13,5 +13,5 @@ class CompanyDetails(private val company: Company) : UserDetails {
     override fun getPassword(): String = company.password
     override fun isAccountNonExpired(): Boolean = true
     override fun isAccountNonLocked(): Boolean = true
-    fun getId(): UUID = company.id!!
+    fun getId(): UUID = company.id
 }

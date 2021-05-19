@@ -16,17 +16,10 @@ import java.util.UUID
 @RequestMapping("/api")
 class CompanyResource(@Autowired private val companyService: CompanyServiceContract) {
 
-  /*  @GetMapping("/company")
-    fun getAllCompany() : ResponseEntity<List<Company>> {
-        val companies = this.companyService.getAll()
-
-        return ResponseEntity.ok(companies)
-    }*/
     @GetMapping("/company")
-    fun getCompany(@RequestHeader("Authorization") auth: String): String {
-
-        // val company = this.companyService.getById(id)
-        return auth
+    fun getCompany(@RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
+        val company = this.companyService.getById(id)
+        return ResponseEntity.ok(company)
     }
 
     @PostMapping("/company")
@@ -39,7 +32,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
     }
 
     @PutMapping("/company")
-    fun update(@RequestBody updateDto: UpdateCompanyDto): ResponseEntity<Company> {
+    fun update(@RequestBody updateDto: UpdateCompanyDto, @RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
         val company = this.companyService.update(updateDto)
 
         return ResponseEntity

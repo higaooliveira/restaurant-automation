@@ -27,16 +27,17 @@ open class JWTAuthorizationFilter(
             if (it.startsWith(bearer)) {
                 val auth = getAuthentication(it)
                 SecurityContextHolder.getContext().authentication = auth
+                request.setAttribute("companyId", (auth.principal as CompanyDetails).getId())
             }
         }
         chain.doFilter(request, response)
     }
 
-    private fun getAuthentication(authorizationHeader: String?): UsernamePasswordAuthenticationToken {
-        val token = authorizationHeader?.substring(7) ?: ""
+    private fun getAuthentication(authorizationHeader: String): UsernamePasswordAuthenticationToken {
+        val token = authorizationHeader.substring(7)
         if (jwtUtil.isTokenValid(token)) {
-            val username = jwtUtil.getUserName(token)
-            val user = CompanyDetails(companyService.getById(UUID.fromString(username)))
+            val userId = jwtUtil.getId(token)
+            val user = CompanyDetails(companyService.getById(UUID.fromString(userId)))
             return UsernamePasswordAuthenticationToken(user, null, user.authorities)
         }
         throw UsernameNotFoundException("Auth invalid!")

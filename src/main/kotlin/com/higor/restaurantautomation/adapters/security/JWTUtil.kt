@@ -40,7 +40,7 @@ class JWTUtil {
         }
     }
 
-    fun getUserName(token: String): String? {
+    fun getId(token: String): String? {
         val claims = getClaimsToken(token)
         return claims?.subject
     }
