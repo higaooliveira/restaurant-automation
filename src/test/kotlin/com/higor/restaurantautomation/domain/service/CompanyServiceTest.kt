@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
 import java.util.UUID
+import java.util.Optional
 
 @SpringBootTest
 @ContextConfiguration(classes = [CompanyService::class])
@@ -46,19 +47,6 @@ class CompanyServiceTest {
         Assertions.assertEquals(expectedCompany.get().id, returnedCompany.id)
     }
 
-    @Test
-    fun getAllCompaniesTest() {
-        val id = UUID.randomUUID()
-        val expectedCompaniesList = listOf(
-            Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456"),
-            Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
-        )
-        BDDMockito.`when`(this.repository.findAll()).thenReturn(expectedCompaniesList)
-
-        val companiesList = this.companyService.getAll()
-
-        Assertions.assertEquals(expectedCompaniesList, companiesList)
-    }
 
     @Test
     fun createCompanyTest() {
