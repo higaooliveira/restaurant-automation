@@ -33,9 +33,7 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
         }
 
-        println("antes erro")
         val company = MapperUtils.convert<CreateCompanyDto, Company>(createDto)
-        println("deu erro")
         company.encodePassword()
 
         return this.companyRepository.save(company)

@@ -19,7 +19,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     private lateinit var companyDetailsService: CompanyServiceContract
 
-    private val jwtUtil: JWTUtil = JWTUtil()
+    @Autowired
+    private lateinit var jwtUtil: JWTUtil
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {

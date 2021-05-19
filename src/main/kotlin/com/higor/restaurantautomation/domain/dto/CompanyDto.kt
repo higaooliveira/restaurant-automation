@@ -10,6 +10,13 @@ data class CreateCompanyDto(
     val document: String
 )
 
+data class CompanyResponse(
+    val name: String,
+    val email: String,
+    val phone: String,
+    val document: String
+)
+
 data class UpdateCompanyDto(
     val id: UUID,
     val name: String? = null,

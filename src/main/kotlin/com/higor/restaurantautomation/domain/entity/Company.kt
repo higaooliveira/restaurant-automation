@@ -21,8 +21,6 @@ data class Company(
 
     val name: String,
     val email: String,
-
-    @JsonIgnore
     var password: String,
     val phone: String,
     val document: String,

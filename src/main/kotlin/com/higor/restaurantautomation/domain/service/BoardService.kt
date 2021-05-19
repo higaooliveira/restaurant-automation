@@ -16,10 +16,10 @@ import java.util.UUID
 
 @Service
 class BoardService(
-    @Autowired val boardRepository: BoardRepository,
-    @Autowired val companyService: CompanyService
+    @Autowired private val boardRepository: BoardRepository,
+    @Autowired private val companyService: CompanyService,
+    @Autowired private val qrCodeWriter: QrCodeWriter,
 ) : BoardServiceContract {
-    private val qrCodeWriter = QrCodeWriter()
 
     override fun getById(id: UUID): Board = this.boardRepository
         .findById(id)
