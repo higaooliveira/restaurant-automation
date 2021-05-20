@@ -3,15 +3,18 @@ package com.higor.restaurantautomation.adapters.security
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.Date
 
 @Component
 class JWTUtil {
 
-    private val secret = "SECRET"
+    @Value("\${jwt.secret}")
+    private val secret: String = "SECRET"
 
-    private val expiration: Long = 600000000000
+    @Value("\${jwt.expiration-time}")
+    private val expiration: Long = 60
 
     fun generateToken(username: String): String = Jwts.builder()
         .setSubject(username)
