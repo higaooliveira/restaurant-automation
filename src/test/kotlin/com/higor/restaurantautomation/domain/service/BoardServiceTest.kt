@@ -52,7 +52,7 @@ class BoardServiceTest {
             Board(UUID.randomUUID(), 1L, "www.foobar.com.br", company),
             Board(UUID.randomUUID(), 2L, "www.foobar.com.br", company)
         )
-        BDDMockito.`when`(repository.findAll()).thenReturn(expectedBoardList)
+        BDDMockito.`when`(repository.findAllByCompanyId(company.id)).thenReturn(expectedBoardList)
 
         val actualBoardList = service.getAll(company.id)
 
