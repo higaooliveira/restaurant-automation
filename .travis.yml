@@ -4,3 +4,7 @@ jdk:
 
 script:
   - ./gradlew clean build test
+
+branches:
+  only:
+  - main

@@ -1,11 +1,10 @@
 package com.higor.restaurantautomation.domain.service
 
+import com.higor.restaurantautomation.adapters.repository.BoardRepository
 import com.higor.restaurantautomation.domain.dto.CreateBoardDto
-import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
-import com.higor.restaurantautomation.domain.repository.BoardRepository
-import com.higor.restaurantautomation.domain.service.contracts.BoardServiceContract
+import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
@@ -15,10 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ContextConfiguration
-import java.util.*
+import java.util.Optional
+import java.util.UUID
 
 @SpringBootTest
-@ContextConfiguration(classes=[BoardService::class])
+@ContextConfiguration(classes = [BoardService::class])
 class BoardServiceTest {
 
     @MockBean
@@ -27,50 +27,61 @@ class BoardServiceTest {
     @MockBean
     lateinit var companyService: CompanyService
 
+    @MockBean
+    lateinit var qrCodeWriter: QrCodeWriter
+
     @Autowired
     lateinit var service: BoardService
 
     @Test
     fun getBoardTest() {
-        val company =  Company(1L, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
-        val expectedBoard = Optional.of(Board(1L, 1L, "www.foobar.com.br", company))
-        BDDMockito.`when`(this.repository.findById(1L)).thenReturn(expectedBoard)
+        val company = Company(UUID.randomUUID(), "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
+        val id = UUID.randomUUID()
+        val expectedBoard = Optional.of(Board(id, 1L, "www.foobar.com.br", company))
+        BDDMockito.`when`(repository.findById(id)).thenReturn(expectedBoard)
 
-        val actualBoard = this.service.getById(1L)
+        val actualBoard = service.getById(id)
         Assertions.assertEquals(expectedBoard.get(), actualBoard)
         Assertions.assertEquals(expectedBoard.get().id, actualBoard.id)
     }
 
     @Test
     fun getAllBoardTest() {
-        val company =  Company(1L, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
-        val expectedBoardList = listOf(Board(1L, 1L, "www.foobar.com.br", company), Board(2L, 2L, "www.foobar.com.br", company))
-        BDDMockito.`when`(this.repository.findAll()).thenReturn(expectedBoardList)
+        val company = Company(UUID.randomUUID(), "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
+        val expectedBoardList = listOf(
+            Board(UUID.randomUUID(), 1L, "www.foobar.com.br", company),
+            Board(UUID.randomUUID(), 2L, "www.foobar.com.br", company)
+        )
+        BDDMockito.`when`(repository.findAllByCompanyId(company.id)).thenReturn(expectedBoardList)
 
-        val actualBoardList = this.service.getAll()
+        val actualBoardList = service.getAll(company.id)
+
         Assertions.assertEquals(expectedBoardList, actualBoardList)
     }
 
     @Test
     fun createBoardTest() {
-        val boardDto = CreateBoardDto(1L, 1L)
-        val company = Company(1L,"John Doe","johndoe@mock.com","123456","123456","123456")
-        val expectedBoard = Board(1L, 1L, "/tmp/board_1_1.png", company)
-        BDDMockito.`when`(this.companyService.getById(1L)).thenReturn(company)
+        val id = UUID.randomUUID()
+        val boardDto = CreateBoardDto(1L, id)
+        val company = Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
+        val expectedBoard = Board(id, 1L, "/tmp/board_1_1.png", company)
+        val content = "${expectedBoard.company}_${expectedBoard.id}_${expectedBoard.number}"
+        BDDMockito.`when`(companyService.getById(id)).thenReturn(company)
+        BDDMockito.doNothing().`when`(qrCodeWriter).write(expectedBoard.qrCodeLink, content)
 
-        BDDMockito.`when`(this.repository.save(ArgumentMatchers.any(Board::class.java))).thenReturn(expectedBoard)
-        val returnedBoard = this.service.create(boardDto)
+        BDDMockito.`when`(repository.save(ArgumentMatchers.any(Board::class.java))).thenReturn(expectedBoard)
+        val returnedBoard = service.create(boardDto)
 
         Assertions.assertEquals(expectedBoard, returnedBoard)
     }
 
-
     @Test
-    fun deleteBookTest(){
-        val company =  Company(1L, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
-        val expectedBoard = Optional.of(Board(1L, 1L, "www.foobar.com.br", company))
-        BDDMockito.`when`(this.repository.findById(1L)).thenReturn(expectedBoard)
-        this.service.delete(expectedBoard.get().id!!)
-        BDDMockito.verify(this.repository, Mockito.times(1)).deleteById(expectedBoard.get().id!!)
+    fun deleteBookTest() {
+        val id = UUID.randomUUID()
+        val company = Company(id, "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
+        val expectedBoard = Optional.of(Board(id, 1L, "www.foobar.com.br", company))
+        BDDMockito.`when`(repository.findById(id)).thenReturn(expectedBoard)
+        service.delete(expectedBoard.get().id)
+        BDDMockito.verify(repository, Mockito.times(1)).deleteById(expectedBoard.get().id)
     }
 }

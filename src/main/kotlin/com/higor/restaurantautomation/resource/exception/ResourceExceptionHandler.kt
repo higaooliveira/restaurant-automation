@@ -28,7 +28,7 @@ class ResourceExceptionHandler {
 
     @ExceptionHandler(ResourceAlreadyExists::class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    fun resourceAlreadyExists(ex: ResourceAlreadyExists, request: HttpServletRequest): ResponseEntity<StandardError>{
+    fun resourceAlreadyExists(ex: ResourceAlreadyExists, request: HttpServletRequest): ResponseEntity<StandardError> {
         this.messageList.add(ex.message!!)
         this.error = StandardError(this.messageList, request.requestURI, Instant.now())
 
@@ -37,7 +37,7 @@ class ResourceExceptionHandler {
 
     @ExceptionHandler(IOException::class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    fun ioException(ex: IOException, request: HttpServletRequest): ResponseEntity<StandardError>{
+    fun ioException(ex: IOException, request: HttpServletRequest): ResponseEntity<StandardError> {
         this.messageList.add(ex.message!!)
         this.error = StandardError(this.messageList, request.requestURI, Instant.now())
 
