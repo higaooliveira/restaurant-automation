@@ -4,9 +4,11 @@ import com.higor.restaurantautomation.adapters.repository.BoardRepository
 import com.higor.restaurantautomation.domain.dto.CreateBoardDto
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
+import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers
 import org.mockito.BDDMockito
 import org.mockito.Mockito
@@ -33,6 +35,15 @@ class BoardServiceTest {
     @Autowired
     lateinit var service: BoardService
 
+
+    @Test
+    fun getBoardTestException(){
+        val id = UUID.randomUUID()
+        BDDMockito.`when`(repository.findById(id)).thenThrow(ResourceNotFound("Resource Not Found for passed id"))
+
+        val exception = assertThrows<ResourceNotFound> { service.getById(id)  }
+        Assertions.assertEquals(exception.localizedMessage, "Resource Not Found for passed id")
+    }
     @Test
     fun getBoardTest() {
         val company = Company(UUID.randomUUID(), "John Doe", "johndoe@mock.com", "123456", "123456", "123456")
