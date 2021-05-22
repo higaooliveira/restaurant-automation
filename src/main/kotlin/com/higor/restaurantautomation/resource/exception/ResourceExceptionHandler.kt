@@ -23,7 +23,7 @@ class ResourceExceptionHandler {
     fun methodArgumentException(
         ex: MethodArgumentNotValidException,
         request: HttpServletRequest
-    ): ResponseEntity<StandardError>  {
+    ): ResponseEntity<StandardError> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(standardErrorFactory("Invalid Request Body", request))
