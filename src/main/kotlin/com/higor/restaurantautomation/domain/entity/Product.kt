@@ -1,6 +1,7 @@
 package com.higor.restaurantautomation.domain.entity
 
 import com.higor.restaurantautomation.domain.dto.ProductDto
+
 import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.CascadeType
@@ -60,4 +61,5 @@ class Product(
         val now = LocalDate.now()
         it.validUntil.isEqual(now) || it.validUntil.isAfter(now)
     }
+
 }

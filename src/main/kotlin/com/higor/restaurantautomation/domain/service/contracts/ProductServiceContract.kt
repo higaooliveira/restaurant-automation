@@ -7,7 +7,6 @@ import com.higor.restaurantautomation.domain.entity.Product
 import java.util.UUID
 
 interface ProductServiceContract : Crudable<Product> {
-
     fun getAll(companyId: UUID): List<ProductDto>
     fun create(productDto: ProductDto, companyId: UUID): ProductDto
     fun update(productDto: UpdateProductDto): ProductDto
