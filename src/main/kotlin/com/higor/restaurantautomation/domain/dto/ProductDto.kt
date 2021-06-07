@@ -20,6 +20,8 @@ data class ProductDto(
     @field:PositiveOrZero
     val quantity: Int,
     val description: String,
+
+    val promotion: PromotionResponseDto? = null
 ) {
     fun toEntity(company: Company) = Product(
         name = this.name,

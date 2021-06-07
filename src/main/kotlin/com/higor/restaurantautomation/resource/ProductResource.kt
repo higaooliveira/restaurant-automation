@@ -1,6 +1,7 @@
 package com.higor.restaurantautomation.resource
 
 import com.higor.restaurantautomation.domain.dto.ProductDto
+import com.higor.restaurantautomation.domain.dto.PromotionDto
 import com.higor.restaurantautomation.domain.dto.UpdateProductDto
 import com.higor.restaurantautomation.domain.service.contracts.ProductServiceContract
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,6 +39,13 @@ class ProductResource(
     ): ResponseEntity<ProductDto> {
         val product = this.productService.create(productDto, companyId)
         return ResponseEntity.status(HttpStatus.CREATED).body(product)
+    }
+
+    @PostMapping("/product/promotion")
+    fun createPromotion(@RequestBody promotionDto: PromotionDto): ResponseEntity<ProductDto> {
+        val productWithPromotion = this.productService.createPromotion(promotionDto)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productWithPromotion)
     }
 
     @PutMapping("/product")
