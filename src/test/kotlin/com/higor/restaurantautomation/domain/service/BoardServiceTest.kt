@@ -131,8 +131,6 @@ class BoardServiceTest {
 
         Assertions.assertNotNull(exception)
         Assertions.assertEquals("Resource already exists", exception.localizedMessage)
-
-
     }
     @Test
     fun `Given a valid board Id, When try to delete, Then repository should be called`() {

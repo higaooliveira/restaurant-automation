@@ -2,9 +2,12 @@ package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.ProductRepository
 import com.higor.restaurantautomation.domain.dto.ProductDto
+import com.higor.restaurantautomation.domain.dto.PromotionDto
 import com.higor.restaurantautomation.domain.dto.UpdateProductDto
 import com.higor.restaurantautomation.domain.entity.Product
+import com.higor.restaurantautomation.domain.entity.PromotionType
 import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
+import com.higor.restaurantautomation.domain.service.contracts.DiscountCalculatorStrategy
 import com.higor.restaurantautomation.domain.service.contracts.ProductServiceContract
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
@@ -19,15 +22,25 @@ class ProductService(
     @Autowired private val companyService: CompanyServiceContract
 ) : ProductServiceContract {
 
-    override fun getById(id: UUID): Product =
-        this.productRepository
-            .findById(id)
-            .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
+    override fun getById(id: UUID): Product = this.productRepository
+        .findById(id)
+        .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
     override fun getAll(companyId: UUID): List<ProductDto> {
-        val products = this.productRepository.findAllByCompanyId(companyId)
+        val products = this.productRepository.findAllByCompanyId(companyId).map { it.toDto() }
 
-        return products.map { it.toDto() }
+        return products.map { product ->
+            val promotion = product.promotion
+
+            promotion?.let {
+                val discountCalculator = getDiscountCalculator(it.type)
+                val priceWithDiscount = calculateDiscount(discountCalculator, it.value, product.price)
+
+                return@map product.copy(price = priceWithDiscount)
+            }
+
+            product
+        }
     }
 
     override fun create(productDto: ProductDto, companyId: UUID): ProductDto {
@@ -46,6 +59,14 @@ class ProductService(
         return product.toDto()
     }
 
+    override fun createPromotion(promotionDto: PromotionDto): ProductDto {
+        val product = getById(promotionDto.productId)
+        val promotion = promotionDto.toEntity(product)
+        product.addPromotion(promotion)
+
+        return this.productRepository.save(product).toDto()
+    }
+
     override fun delete(id: UUID) {
         try {
             this.productRepository.deleteById(id)
@@ -53,4 +74,18 @@ class ProductService(
             throw ResourceNotFound("Resource Not Found for passed id")
         }
     }
+
+    private fun calculateDiscount(
+        discountCalculator: DiscountCalculatorStrategy,
+        discount: Double,
+        price: Double
+    ): Double = discountCalculator.calculate(discount, price)
+
+    private fun getDiscountCalculator(promotionType: PromotionType): DiscountCalculatorStrategy {
+        return when (promotionType) {
+            PromotionType.PERCENTAGE -> PercentageDiscountCalculator
+            PromotionType.REAL -> RealDiscountCalculator
+        }
+    }
+
 }
