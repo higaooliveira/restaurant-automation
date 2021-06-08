@@ -32,6 +32,14 @@ data class ProductDto(
     )
 }
 
+data class ProductPagedResponse(
+    val products: List<ProductDto>,
+    val page: Int,
+    val size: Int,
+    val totalPages: Int,
+    val lastPage: Boolean
+)
+
 data class UpdateProductDto(
     val id: UUID,
     val name: String?,
