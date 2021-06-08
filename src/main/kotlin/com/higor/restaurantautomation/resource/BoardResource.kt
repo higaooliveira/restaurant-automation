@@ -31,7 +31,6 @@ class BoardResource(
     ): ResponseEntity<PagedBoardsResponse> {
         val pagedBoardsResponse = this.boardService.getAll(companyId, pageable)
 
-
         return ResponseEntity.ok(pagedBoardsResponse)
     }
 
