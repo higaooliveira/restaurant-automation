@@ -2,6 +2,7 @@ package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.ProductRepository
 import com.higor.restaurantautomation.domain.dto.ProductDto
+import com.higor.restaurantautomation.domain.dto.ProductPagedResponse
 import com.higor.restaurantautomation.domain.dto.PromotionDto
 import com.higor.restaurantautomation.domain.dto.UpdateProductDto
 import com.higor.restaurantautomation.domain.entity.Product
@@ -13,6 +14,7 @@ import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.MapperUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -26,13 +28,11 @@ class ProductService(
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
-    override fun getAll(companyId: UUID): List<ProductDto> {
-        val products = this.productRepository.findAllByCompanyId(companyId).map { it.toDto() }
+    override fun getAll(companyId: UUID, pageable: Pageable): ProductPagedResponse {
+        val pagedProducts = this.productRepository.findAllByCompanyId(companyId, pageable)
+        val productsList = pagedProducts.toList().map { it.toDto() }.map { product ->
 
-        return products.map { product ->
-            val promotion = product.promotion
-
-            promotion?.let {
+            product.promotion?.let {
                 val discountCalculator = getDiscountCalculator(it.type)
                 val priceWithDiscount = calculateDiscount(discountCalculator, it.value, product.price)
 
@@ -41,6 +41,14 @@ class ProductService(
 
             product
         }
+
+        return ProductPagedResponse(
+            products = productsList,
+            page = pagedProducts.pageable.pageNumber,
+            size = pagedProducts.size,
+            totalPages = pagedProducts.totalPages,
+            lastPage = pagedProducts.isLast
+        )
     }
 
     override fun create(productDto: ProductDto, companyId: UUID): ProductDto {
@@ -87,5 +95,4 @@ class ProductService(
             PromotionType.REAL -> RealDiscountCalculator
         }
     }
-
 }

@@ -1,10 +1,12 @@
 package com.higor.restaurantautomation.resource
 
 import com.higor.restaurantautomation.domain.dto.ProductDto
+import com.higor.restaurantautomation.domain.dto.ProductPagedResponse
 import com.higor.restaurantautomation.domain.dto.PromotionDto
 import com.higor.restaurantautomation.domain.dto.UpdateProductDto
 import com.higor.restaurantautomation.domain.service.contracts.ProductServiceContract
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -26,10 +28,13 @@ class ProductResource(
 ) {
 
     @GetMapping("/product")
-    fun getAll(@RequestAttribute("companyId") companyId: UUID): ResponseEntity<List<ProductDto>> {
-        val products = this.productService.getAll(companyId)
+    fun getAll(
+        @RequestAttribute("companyId") companyId: UUID,
+        pageable: Pageable
+    ): ResponseEntity<ProductPagedResponse> {
+        val productPagedResponse = this.productService.getAll(companyId, pageable)
 
-        return ResponseEntity.ok(products)
+        return ResponseEntity.ok(productPagedResponse)
     }
 
     @PostMapping("/product")
