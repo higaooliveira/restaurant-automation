@@ -38,8 +38,6 @@ class Product(
     val promotion: MutableSet<Promotion> = HashSet()
 ) {
 
-    fun calculateTotal(quantity: Int): Double = this.price * quantity
-
     fun toDto(price: Double? = null): ProductDto {
         val promotion = getValidPromotion()
 

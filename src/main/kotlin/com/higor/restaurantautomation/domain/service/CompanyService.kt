@@ -2,6 +2,7 @@ package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.CompanyRepository
 import com.higor.restaurantautomation.adapters.security.CompanyDetails
+import com.higor.restaurantautomation.domain.dto.CompanyResponse
 import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyPasswordDto
@@ -25,7 +26,7 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
-    override fun create(createDto: CreateCompanyDto): Company {
+    override fun create(createDto: CreateCompanyDto): CompanyResponse {
         if (this.companyExistsByEmail(createDto.email)) {
             throw ResourceAlreadyExists("Resource Already exists for the passed email")
         }
@@ -33,20 +34,20 @@ class CompanyService(@Autowired val companyRepository: CompanyRepository) : Comp
         val company = MapperUtils.convert<CreateCompanyDto, Company>(createDto)
         company.encodePassword()
 
-        return this.companyRepository.save(company)
+        return this.companyRepository.save(company).toCompanyResponse()
     }
 
-    override fun update(updateDto: UpdateCompanyDto): Company {
+    override fun update(updateDto: UpdateCompanyDto): CompanyResponse {
         val company = this.getById(updateDto.id!!)
         MapperUtils.merge(updateDto, company)
-        return this.companyRepository.save(company)
+        return this.companyRepository.save(company).toCompanyResponse()
     }
 
-    override fun updatePassword(updateDto: UpdateCompanyPasswordDto): Company {
+    override fun updatePassword(updateDto: UpdateCompanyPasswordDto): CompanyResponse {
         val company = this.getById(updateDto.id!!)
         MapperUtils.merge(updateDto, company)
         company.encodePassword()
-        return this.companyRepository.save(company)
+        return this.companyRepository.save(company).toCompanyResponse()
     }
 
     override fun delete(id: UUID) {

@@ -30,6 +30,8 @@ data class ProductDto(
         description = this.description,
         company = company
     )
+
+    fun calculateTotal(quantity: Int): Double = this.price * quantity
 }
 
 data class ProductPagedResponse(

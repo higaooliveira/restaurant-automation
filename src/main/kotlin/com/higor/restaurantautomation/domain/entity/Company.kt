@@ -1,6 +1,7 @@
 package com.higor.restaurantautomation.domain.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.higor.restaurantautomation.domain.dto.CompanyResponse
 import com.higor.restaurantautomation.utils.PasswordHelper
 import java.util.UUID
 import javax.persistence.Entity
@@ -27,4 +28,11 @@ data class Company(
     fun encodePassword() {
         this.password = PasswordHelper.encode(this.password)
     }
+
+    fun toCompanyResponse() = CompanyResponse(
+        name = this.name,
+        email = this.email,
+        phone = this.phone,
+        document = this.document
+    )
 }

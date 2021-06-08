@@ -1,9 +1,9 @@
 package com.higor.restaurantautomation.resource
 
+import com.higor.restaurantautomation.domain.dto.CompanyResponse
 import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyPasswordDto
-import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -24,14 +24,14 @@ import java.util.UUID
 class CompanyResource(@Autowired private val companyService: CompanyServiceContract) {
 
     @GetMapping("/company")
-    fun getCompany(@RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
+    fun getCompany(@RequestAttribute("companyId") id: UUID): ResponseEntity<CompanyResponse> {
         val company = this.companyService.getById(id)
 
-        return ResponseEntity.ok(company)
+        return ResponseEntity.ok(company.toCompanyResponse())
     }
 
     @PostMapping("/company")
-    fun create(@RequestBody createDto: CreateCompanyDto): ResponseEntity<Company> {
+    fun create(@RequestBody createDto: CreateCompanyDto): ResponseEntity<CompanyResponse> {
         val company = this.companyService.create(createDto)
 
         return ResponseEntity
@@ -43,7 +43,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
     fun update(
         @RequestBody updateDto: UpdateCompanyDto,
         @RequestAttribute("companyId") id: UUID
-    ): ResponseEntity<Company> {
+    ): ResponseEntity<CompanyResponse> {
         updateDto.id = id
         val company = this.companyService.update(updateDto)
 
@@ -56,7 +56,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
     fun updatePassword(
         @RequestBody updateDto: UpdateCompanyPasswordDto,
         @RequestAttribute("companyId") id: UUID
-    ): ResponseEntity<Company> {
+    ): ResponseEntity<CompanyResponse> {
         updateDto.id = id
         val company = this.companyService.updatePassword(updateDto)
 
@@ -64,7 +64,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
     }
 
     @DeleteMapping("/company")
-    fun delete(@RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
+    fun delete(@RequestAttribute("companyId") id: UUID): ResponseEntity<CompanyResponse> {
         this.companyService.delete(id)
 
         return ResponseEntity.noContent().build()

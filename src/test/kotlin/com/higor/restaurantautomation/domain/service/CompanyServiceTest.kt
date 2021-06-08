@@ -56,7 +56,7 @@ class CompanyServiceTest {
         BDDMockito.`when`(this.repository.save(any(Company::class.java))).thenReturn(expectedCompany)
         val returnedCompany = this.companyService.create(companyDto)
 
-        Assertions.assertEquals(expectedCompany, returnedCompany)
+        Assertions.assertEquals(expectedCompany.toCompanyResponse(), returnedCompany)
     }
 
     @Test
@@ -69,7 +69,7 @@ class CompanyServiceTest {
         BDDMockito.`when`(this.repository.save(any(Company::class.java))).thenReturn(expectedUpdatedCompany)
 
         val returnedCompany = this.companyService.update(updateCompanyDto)
-        Assertions.assertEquals(expectedUpdatedCompany, returnedCompany)
+        Assertions.assertEquals(expectedUpdatedCompany.toCompanyResponse(), returnedCompany)
     }
 
     @Test
