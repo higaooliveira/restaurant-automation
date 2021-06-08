@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.higor.restaurantautomation.domain.dto.BoardResponse
 import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -23,6 +23,11 @@ data class Board(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    @JsonIgnore
     var company: Company
-)
+) {
+    fun toBoardResponse() = BoardResponse(
+        id = this.id,
+        number = this.number,
+        qrCodeLink = this.qrCodeLink
+    )
+}

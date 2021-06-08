@@ -1,7 +1,8 @@
 package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.BoardRepository
-import com.higor.restaurantautomation.domain.dto.CreateBoardDto
+import com.higor.restaurantautomation.domain.dto.CreateBoard
+import com.higor.restaurantautomation.domain.dto.PagedBoardsResponse
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyExists
@@ -16,6 +17,8 @@ import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.ContextConfiguration
 import java.util.Optional
 import java.util.UUID
@@ -74,21 +77,35 @@ class BoardServiceTest {
             phone = "123456",
             document = "123456"
         )
-        val expectedBoardList = listOf(
+        val pageable = PageRequest.of(1, 2)
+        val boardResponseList = listOf(
             Board(UUID.randomUUID(), 1L, "www.foobar.com.br", company),
             Board(UUID.randomUUID(), 2L, "www.foobar.com.br", company)
         )
-        BDDMockito.`when`(repository.findAllByCompanyId(company.id)).thenReturn(expectedBoardList)
 
-        val actualBoardList = service.getAll(company.id)
+        val pagedBoardList = PageImpl(boardResponseList, pageable, 6)
 
-        Assertions.assertEquals(expectedBoardList, actualBoardList)
+        val expectedBoardResponse = PagedBoardsResponse(
+            boardResponseList.map { it.toBoardResponse() },
+            1,
+            2,
+            3,
+            false
+        )
+
+        BDDMockito
+            .`when`(repository.findAllByCompanyId(company.id, pageable))
+            .thenReturn(pagedBoardList)
+
+        val actualBoardList = service.getAll(company.id, pageable)
+
+        Assertions.assertEquals(expectedBoardResponse, actualBoardList)
     }
 
     @Test
     fun `Given a valid DTO, when try to create a board, Then repository should be called`() {
         val id = UUID.randomUUID()
-        val boardDto = CreateBoardDto(1L, id)
+        val boardDto = CreateBoard(1L, id)
         val company = Company(
             id = id,
             name = "John Doe",
@@ -105,13 +122,13 @@ class BoardServiceTest {
         BDDMockito.`when`(repository.save(ArgumentMatchers.any(Board::class.java))).thenReturn(expectedBoard)
         val returnedBoard = service.create(boardDto)
 
-        Assertions.assertEquals(expectedBoard, returnedBoard)
+        Assertions.assertEquals(expectedBoard.toBoardResponse(), returnedBoard)
     }
 
     @Test
     fun `Given an existent board, When try to create the same board, Then ResourceAlreadyExists Exception should throw`() {
         val id = UUID.randomUUID()
-        val boardDto = CreateBoardDto(1L, id)
+        val boardDto = CreateBoard(1L, id)
         val company = Company(
             id = id,
             name = "John Doe",

@@ -1,7 +1,9 @@
 package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.BoardRepository
-import com.higor.restaurantautomation.domain.dto.CreateBoardDto
+import com.higor.restaurantautomation.domain.dto.BoardResponse
+import com.higor.restaurantautomation.domain.dto.CreateBoard
+import com.higor.restaurantautomation.domain.dto.PagedBoardsResponse
 import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.entity.Company
 import com.higor.restaurantautomation.domain.service.contracts.BoardServiceContract
@@ -11,6 +13,7 @@ import com.higor.restaurantautomation.utils.MapperUtils
 import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -25,16 +28,25 @@ class BoardService(
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
-    override fun getAll(companyId: UUID): List<Board> = this.boardRepository
-        .findAllByCompanyId(companyId)
+    override fun getAll(companyId: UUID, pageable: Pageable): PagedBoardsResponse {
+        val pagedBoards = this.boardRepository.findAllByCompanyId(companyId, pageable)
 
-    override fun create(createDto: CreateBoardDto): Board {
+        return PagedBoardsResponse(
+            boards = pagedBoards.toList().map { it.toBoardResponse() },
+            page = pagedBoards.pageable.pageNumber,
+            size = pagedBoards.toList().size,
+            totalPages = pagedBoards.totalPages,
+            lastPage = pagedBoards.isLast
+        )
+    }
+
+    override fun create(createDto: CreateBoard): BoardResponse {
         val company = this.companyService.getById(createDto.companyId!!)
         if (this.boardExists(createDto.number, company)) {
             throw ResourceAlreadyExists("Resource already exists")
         }
 
-        var board = MapperUtils.convert<CreateBoardDto, Board>(createDto)
+        var board = MapperUtils.convert<CreateBoard, Board>(createDto)
         board.company = company
 
         board.qrCodeLink = this.getQRCodeLink(board)
@@ -42,7 +54,7 @@ class BoardService(
         board = this.boardRepository.save(board)
 
         this.generateQrCode(board)
-        return board
+        return board.toBoardResponse()
     }
 
     override fun delete(id: UUID) {
