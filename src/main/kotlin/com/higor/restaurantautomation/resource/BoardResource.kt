@@ -3,7 +3,6 @@ package com.higor.restaurantautomation.resource
 import com.higor.restaurantautomation.domain.dto.BoardResponse
 import com.higor.restaurantautomation.domain.dto.CreateBoard
 import com.higor.restaurantautomation.domain.dto.PagedBoardsResponse
-import com.higor.restaurantautomation.domain.entity.Board
 import com.higor.restaurantautomation.domain.service.contracts.BoardServiceContract
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -37,7 +36,10 @@ class BoardResource(
     }
 
     @GetMapping("/board/{id}")
-    fun getBoard(@PathVariable id: UUID): ResponseEntity<Board> = ResponseEntity.ok(this.boardService.getById(id))
+    fun getBoard(@PathVariable id: UUID): ResponseEntity<BoardResponse> {
+        val board = this.boardService.getById(id)
+        return ResponseEntity.ok(board.toBoardResponse())
+    }
 
     @PostMapping("/board")
     fun create(
@@ -53,7 +55,7 @@ class BoardResource(
     }
 
     @DeleteMapping("/board/{id}")
-    fun delete(@PathVariable id: UUID): ResponseEntity<Board> {
+    fun delete(@PathVariable id: UUID): ResponseEntity<BoardResponse> {
         this.boardService.delete(id)
 
         return ResponseEntity.noContent().build()
