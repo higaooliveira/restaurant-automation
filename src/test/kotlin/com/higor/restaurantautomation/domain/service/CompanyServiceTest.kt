@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.BDDMockito
+import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -39,7 +40,7 @@ class CompanyServiceTest {
                 "123456"
             )
         )
-        BDDMockito.`when`(this.repository.findById(id)).thenReturn(expectedCompany)
+        Mockito.`when`(this.repository.findById(id)).thenReturn(expectedCompany)
 
         val returnedCompany = this.companyService.getById(id)
 

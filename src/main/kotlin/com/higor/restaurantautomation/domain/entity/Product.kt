@@ -20,10 +20,10 @@ class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID? = null,
-    private val name: String,
+    val name: String,
     val price: Double,
-    private val quantity: Int,
-    private val description: String,
+    val quantity: Int,
+    val description: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -37,8 +37,6 @@ class Product(
     )
     val promotion: MutableSet<Promotion> = HashSet()
 ) {
-
-    fun calculateTotal(quantity: Int): Double = this.price * quantity
 
     fun toDto(price: Double? = null): ProductDto {
         val promotion = getValidPromotion()

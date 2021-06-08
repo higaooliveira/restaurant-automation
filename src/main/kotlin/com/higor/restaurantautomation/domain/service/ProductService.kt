@@ -15,9 +15,11 @@ import com.higor.restaurantautomation.utils.MapperUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.util.UUID
 
+@Component
 @Service
 class ProductService(
     @Autowired private val productRepository: ProductRepository,
@@ -34,7 +36,7 @@ class ProductService(
 
             product.promotion?.let {
                 val discountCalculator = getDiscountCalculator(it.type)
-                val priceWithDiscount = calculateDiscount(discountCalculator, it.value, product.price)
+                val priceWithDiscount = calculateDiscount(discountCalculator, product.price, it.value)
 
                 return@map product.copy(price = priceWithDiscount)
             }
@@ -85,9 +87,9 @@ class ProductService(
 
     private fun calculateDiscount(
         discountCalculator: DiscountCalculatorStrategy,
-        discount: Double,
-        price: Double
-    ): Double = discountCalculator.calculate(discount, price)
+        price: Double,
+        discount: Double
+    ): Double = discountCalculator.calculate(price, discount)
 
     private fun getDiscountCalculator(promotionType: PromotionType): DiscountCalculatorStrategy {
         return when (promotionType) {
