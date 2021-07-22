@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.adapters.security
+package com.higor.restaurantautomation.configuration.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.higor.restaurantautomation.domain.dto.CompanyLoggedInDto
@@ -22,8 +22,8 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager, priv
                 .readValue<CompanyLoginDto>(request.inputStream)
             val token = UsernamePasswordAuthenticationToken(credentials.email, credentials.password)
             return authenticationManager.authenticate(token)
-        } catch (e: Exception) {
-            throw e
+        } catch (ex: Exception) {
+            throw ex
         }
     }
 

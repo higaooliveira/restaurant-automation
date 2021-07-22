@@ -1,7 +1,7 @@
 package com.higor.restaurantautomation.domain.service
 
 import com.higor.restaurantautomation.adapters.repository.CompanyRepository
-import com.higor.restaurantautomation.adapters.security.CompanyDetails
+import com.higor.restaurantautomation.configuration.security.CompanyDetails
 import com.higor.restaurantautomation.domain.dto.CreateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyDto
 import com.higor.restaurantautomation.domain.dto.UpdateCompanyPasswordDto

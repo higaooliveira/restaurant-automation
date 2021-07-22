@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.adapters.security
+package com.higor.restaurantautomation.configuration.security
 
 import com.higor.restaurantautomation.domain.service.contracts.CompanyServiceContract
 import org.springframework.security.authentication.AuthenticationManager
