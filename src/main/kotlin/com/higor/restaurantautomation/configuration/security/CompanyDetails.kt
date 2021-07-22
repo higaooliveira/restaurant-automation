@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.adapters.security
+package com.higor.restaurantautomation.configuration.security
 
 import com.higor.restaurantautomation.domain.entity.Company
 import org.springframework.security.core.GrantedAuthority
