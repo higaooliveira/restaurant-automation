@@ -9,6 +9,7 @@ import com.higor.restaurantautomation.domain.service.exception.ResourceAlreadyEx
 import com.higor.restaurantautomation.domain.service.exception.ResourceNotFound
 import com.higor.restaurantautomation.utils.QrCodeWriter
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers
