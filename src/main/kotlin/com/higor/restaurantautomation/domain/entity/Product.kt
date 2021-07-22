@@ -50,6 +50,7 @@ class Product(
             promotion = promotion?.toResponseDto()
         )
     }
+
     fun addPromotion(promotion: Promotion) {
         this.promotion.add(promotion)
     }

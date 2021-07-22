@@ -24,7 +24,7 @@ class BoardResource(
     @Autowired private val boardService: BoardServiceContract
 ) {
 
-    @GetMapping("/board")
+    @GetMapping("/office/board")
     fun getAllBoards(
         @RequestAttribute("companyId") companyId: UUID,
         pageable: Pageable
@@ -34,13 +34,13 @@ class BoardResource(
         return ResponseEntity.ok(pagedBoardsResponse)
     }
 
-    @GetMapping("/board/{id}")
+    @GetMapping("/office/board/{id}")
     fun getBoard(@PathVariable id: UUID): ResponseEntity<BoardResponse> {
         val board = this.boardService.getById(id)
         return ResponseEntity.ok(board.toBoardResponse())
     }
 
-    @PostMapping("/board")
+    @PostMapping("/office/board")
     fun create(
         @RequestBody createDto: CreateBoard,
         @RequestAttribute("companyId") companyId: UUID
@@ -53,7 +53,7 @@ class BoardResource(
             .body(board)
     }
 
-    @DeleteMapping("/board/{id}")
+    @DeleteMapping("/office/board/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<BoardResponse> {
         this.boardService.delete(id)
 

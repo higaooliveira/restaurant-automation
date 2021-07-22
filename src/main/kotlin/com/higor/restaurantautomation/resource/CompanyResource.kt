@@ -23,14 +23,14 @@ import java.util.UUID
 @RequestMapping("/api")
 class CompanyResource(@Autowired private val companyService: CompanyServiceContract) {
 
-    @GetMapping("/company")
+    @GetMapping("/office/company")
     fun getCompany(@RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
         val company = this.companyService.getById(id)
 
         return ResponseEntity.ok(company)
     }
 
-    @PostMapping("/company")
+    @PostMapping("/office/company")
     fun create(@RequestBody createDto: CreateCompanyDto): ResponseEntity<Company> {
         val company = this.companyService.create(createDto)
 
@@ -39,7 +39,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
             .body(company)
     }
 
-    @PutMapping("/company")
+    @PutMapping("/office/company")
     fun update(
         @RequestBody updateDto: UpdateCompanyDto,
         @RequestAttribute("companyId") id: UUID
@@ -52,7 +52,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
             .body(company)
     }
 
-    @PatchMapping("/company/password")
+    @PatchMapping("/office/company/password")
     fun updatePassword(
         @RequestBody updateDto: UpdateCompanyPasswordDto,
         @RequestAttribute("companyId") id: UUID
@@ -63,7 +63,7 @@ class CompanyResource(@Autowired private val companyService: CompanyServiceContr
         return ResponseEntity.ok(company)
     }
 
-    @DeleteMapping("/company")
+    @DeleteMapping("/office/company")
     fun delete(@RequestAttribute("companyId") id: UUID): ResponseEntity<Company> {
         this.companyService.delete(id)
 
