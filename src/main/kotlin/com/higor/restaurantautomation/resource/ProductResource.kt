@@ -27,17 +27,42 @@ class ProductResource(
     @Autowired private val productService: ProductServiceContract
 ) {
 
-    @GetMapping("/product")
+    @GetMapping("/office/products/company")
     fun getAll(
         @RequestAttribute("companyId") companyId: UUID,
         pageable: Pageable
     ): ResponseEntity<ProductPagedResponse> {
-        val productPagedResponse = this.productService.getAll(companyId, pageable)
+        val productPagedResponse = this.getProductList(companyId, pageable)
 
         return ResponseEntity.ok(productPagedResponse)
     }
 
-    @PostMapping("/product")
+    @GetMapping("/products/company/{companyId}")
+    fun getList(
+        @PathVariable companyId: UUID,
+        pageable: Pageable
+    ): ResponseEntity<ProductPagedResponse> {
+        val productPagedResponse = this.getProductList(companyId, pageable)
+
+        return ResponseEntity.ok(productPagedResponse)
+    }
+
+    @GetMapping("/office/products/{productId}")
+    fun getDetails(
+        @RequestAttribute("companyId") companyId: UUID,
+        @PathVariable productId: UUID
+    ): ResponseEntity<ProductDto> {
+        val product = this.productService.get(productId)
+        return ResponseEntity.ok(product)
+    }
+
+    @GetMapping("/products/{productId}/company/{companyId}")
+    fun getById(@PathVariable companyId: UUID, @PathVariable productId: UUID): ResponseEntity<ProductDto> {
+        val product = this.productService.get(productId)
+        return ResponseEntity.ok(product)
+    }
+
+    @PostMapping("/office/products")
     fun create(
         @RequestAttribute("companyId") companyId: UUID,
         @Valid @RequestBody productDto: ProductDto
@@ -46,23 +71,27 @@ class ProductResource(
         return ResponseEntity.status(HttpStatus.CREATED).body(product)
     }
 
-    @PostMapping("/product/promotion")
+    @PostMapping("/office/products/promotion")
     fun createPromotion(@RequestBody promotionDto: PromotionDto): ResponseEntity<ProductDto> {
         val productWithPromotion = this.productService.createPromotion(promotionDto)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(productWithPromotion)
     }
 
-    @PutMapping("/product")
+    @PutMapping("/office/products")
     fun update(@RequestBody productDto: UpdateProductDto): ResponseEntity<ProductDto> {
         val product = this.productService.update(productDto)
 
         return ResponseEntity.ok(product)
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/office/products/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<Unit> {
         this.productService.delete(id)
         return ResponseEntity.noContent().build()
+    }
+
+    private fun getProductList(companyId: UUID, pageable: Pageable): ProductPagedResponse {
+        return this.productService.getAll(companyId, pageable)
     }
 }

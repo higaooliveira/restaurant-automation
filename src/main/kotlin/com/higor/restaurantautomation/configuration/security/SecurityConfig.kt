@@ -28,6 +28,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/api/company").permitAll()
             .antMatchers(HttpMethod.POST, "/login").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
             .anyRequest().authenticated()
 
         http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil))

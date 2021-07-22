@@ -8,9 +8,12 @@ import com.higor.restaurantautomation.domain.entity.Product
 import org.springframework.data.domain.Pageable
 import java.util.UUID
 
-interface ProductServiceContract : Crudable<Product> {
+interface ProductServiceContract {
+    fun getById(id: UUID): Product
+    fun get(id: UUID): ProductDto
     fun getAll(companyId: UUID, pageable: Pageable): ProductPagedResponse
     fun create(productDto: ProductDto, companyId: UUID): ProductDto
     fun update(productDto: UpdateProductDto): ProductDto
     fun createPromotion(promotionDto: PromotionDto): ProductDto
+    fun delete(id: UUID)
 }
