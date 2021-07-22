@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.adapters.security
+package com.higor.restaurantautomation.configuration.security
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
