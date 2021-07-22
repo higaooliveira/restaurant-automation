@@ -30,19 +30,14 @@ class ProductService(
         .findById(id)
         .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
 
+    override fun get(id: UUID): ProductDto = this.productRepository
+        .findById(id)
+        .map { applyDiscount(it.toDto()) }
+        .orElseThrow { ResourceNotFound("Resource Not Found for passed id") }
+
     override fun getAll(companyId: UUID, pageable: Pageable): ProductPagedResponse {
         val pagedProducts = this.productRepository.findAllByCompanyId(companyId, pageable)
-        val productsList = pagedProducts.toList().map { it.toDto() }.map { product ->
-
-            product.promotion?.let {
-                val discountCalculator = getDiscountCalculator(it.type)
-                val priceWithDiscount = calculateDiscount(discountCalculator, product.price, it.value)
-
-                return@map product.copy(price = priceWithDiscount)
-            }
-
-            product
-        }
+        val productsList = pagedProducts.toList().map { applyDiscount(it.toDto()) }
 
         return ProductPagedResponse(
             products = productsList,
@@ -85,11 +80,16 @@ class ProductService(
         }
     }
 
-    private fun calculateDiscount(
-        discountCalculator: DiscountCalculatorStrategy,
-        price: Double,
-        discount: Double
-    ): Double = discountCalculator.calculate(price, discount)
+    private fun applyDiscount(product: ProductDto): ProductDto {
+        product.promotion?.let {
+            val discountCalculator = getDiscountCalculator(it.type)
+            val priceWithDiscount = discountCalculator.calculate(product.price, it.value)
+
+            return product.copy(price = priceWithDiscount)
+        }
+
+        return product
+    }
 
     private fun getDiscountCalculator(promotionType: PromotionType): DiscountCalculatorStrategy {
         return when (promotionType) {
