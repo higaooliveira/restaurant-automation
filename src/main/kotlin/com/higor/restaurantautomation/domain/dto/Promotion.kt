@@ -1,8 +1,8 @@
 package com.higor.restaurantautomation.domain.dto
 
-import com.higor.restaurantautomation.domain.entity.Product
-import com.higor.restaurantautomation.domain.entity.Promotion
-import com.higor.restaurantautomation.domain.entity.PromotionType
+import com.higor.restaurantautomation.adapters.entity.Product
+import com.higor.restaurantautomation.adapters.entity.Promotion
+import com.higor.restaurantautomation.adapters.entity.PromotionType
 import java.time.LocalDate
 import java.util.UUID
 

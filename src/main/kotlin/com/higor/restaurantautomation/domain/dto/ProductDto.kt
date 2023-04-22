@@ -1,11 +1,12 @@
 package com.higor.restaurantautomation.domain.dto
 
-import com.higor.restaurantautomation.domain.entity.Company
-import com.higor.restaurantautomation.domain.entity.Product
+import com.higor.restaurantautomation.adapters.entity.Company
+import com.higor.restaurantautomation.adapters.entity.Product
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.PositiveOrZero
 import java.util.UUID
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.PositiveOrZero
+
 
 data class ProductDto(
 

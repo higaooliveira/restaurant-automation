@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class Mapper : ModelMapper() {
     init {
         configuration.matchingStrategy = MatchingStrategies.STRICT
-        configuration.fieldAccessLevel = Configuration.AccessLevel.PRIVATE
+        configuration.fieldAccessLevel = Configuration.AccessLevel.PUBLIC
         configuration.isFieldMatchingEnabled = true
         configuration.isSkipNullEnabled = true
     }

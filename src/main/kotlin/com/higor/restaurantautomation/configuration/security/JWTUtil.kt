@@ -1,50 +1,68 @@
 package com.higor.restaurantautomation.configuration.security
 
+import com.higor.restaurantautomation.adapters.entity.Company
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.io.Decoders
+import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
+import java.security.Key
 import java.util.Date
+import javax.crypto.SecretKey
 
 @Component
 class JWTUtil {
 
     @Value("\${jwt.secret}")
-    private val secret: String = "SECRET"
+    private val secretKey: String = "SECRET"
 
     @Value("\${jwt.expiration-time}")
     private val expiration: Long = 60
 
-    fun generateToken(username: String): String = Jwts.builder()
-        .setSubject(username)
-        .setExpiration(Date(System.currentTimeMillis() + expiration))
-        .signWith(SignatureAlgorithm.HS512, secret.toByteArray())
-        .compact()
-
-    fun isTokenValid(token: String): Boolean {
-        val claims = getClaimsToken(token)
-        if (claims != null) {
-            val username = claims.subject
-            val expirationDate = claims.expiration
-            val now = Date(System.currentTimeMillis())
-            if (username != null && expirationDate != null && now.before(expirationDate)) {
-                return true
-            }
-        }
-        return false
+    fun generateToken(userDetails: Company): String  {
+        return Jwts
+            .builder()
+            .setSubject(userDetails.id.toString())
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + expiration))
+            .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+            .compact()
     }
 
-    private fun getClaimsToken(token: String): Claims? {
-        return try {
-            Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(token).body
-        } catch (e: Exception) {
-            null
-        }
+    fun isTokenValid(token: String, company: Company): Boolean {
+        val claims = extractAllClaims(token) ?: return false
+
+        val companyId = claims.subject
+
+        return (companyId == company.id.toString()) && !isTokenExpired(token)
     }
 
     fun getId(token: String): String? {
-        val claims = getClaimsToken(token)
+        val claims = extractAllClaims(token)
         return claims?.subject
+    }
+
+    private fun getSignInKey(): Key {
+        val keyBytes = secretKey.toByteArray()
+
+        return Keys.hmacShaKeyFor(keyBytes)
+    }
+
+    private fun isTokenExpired(token: String): Boolean {
+        val claims = extractAllClaims(token) ?: return true
+        return claims.expiration.before(Date(System.currentTimeMillis()))
+    }
+
+    private fun extractAllClaims(token: String): Claims? {
+        return Jwts
+            .parserBuilder()
+            .setSigningKey(getSignInKey()   )
+            .build()
+            .parseClaimsJws(token)
+            .body
+
     }
 }

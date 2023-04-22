@@ -1,5 +1,8 @@
 package com.higor.restaurantautomation.domain.dto
 
+import com.higor.restaurantautomation.adapters.entity.Company
+import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.utils.PasswordHelper
 import java.util.UUID
 
 data class CreateCompanyDto(
@@ -8,7 +11,18 @@ data class CreateCompanyDto(
     val password: String,
     val phone: String,
     val document: String
-)
+) {
+    fun toEntity(): Company {
+        return Company(
+            name = name,
+            email = email,
+            pass = PasswordHelper.encode(password),
+            phone = phone,
+            document = document,
+            role = Role.ADMIN
+        )
+    }
+}
 
 data class CompanyResponse(
     val name: String,
