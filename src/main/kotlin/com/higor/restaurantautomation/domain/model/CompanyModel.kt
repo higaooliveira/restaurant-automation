@@ -2,6 +2,9 @@ package com.higor.restaurantautomation.domain.model
 
 import com.higor.restaurantautomation.adapters.entity.Company
 import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.domain.dto.CompanyDtoOut
+import com.higor.restaurantautomation.domain.service.exception.ApiException
+import org.springframework.http.HttpStatus
 import java.time.Instant
 import java.util.UUID
 
@@ -12,9 +15,13 @@ data class CompanyModel(
     val password: String,
     val document: String,
     val phone: String,
+    val role: Role = Role.ADMIN,
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant?,
 ) {
     fun toEntity(): Company {
         return Company(
+            id = id,
             name = name,
             email = email,
             pass = password,
@@ -22,6 +29,16 @@ data class CompanyModel(
             phone = phone,
             role = Role.ADMIN,
             createdAt = Instant.now(),
+        )
+    }
+
+    fun toDto(): CompanyDtoOut {
+        return CompanyDtoOut(
+            id = id ?: throw ApiException("Company Not found", HttpStatus.NOT_FOUND),
+            name = name,
+            email = email,
+            document = document,
+            phone = phone,
         )
     }
 
@@ -34,6 +51,9 @@ data class CompanyModel(
                 password = entity.password,
                 document = entity.document,
                 phone = entity.phone,
+                createdAt = entity.createdAt,
+                updatedAt = entity.updatedAt,
+                role = entity.role,
             )
         }
     }
