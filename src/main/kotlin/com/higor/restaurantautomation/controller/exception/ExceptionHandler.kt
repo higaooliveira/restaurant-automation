@@ -1,8 +1,8 @@
 package com.higor.restaurantautomation.controller.exception
 
 import com.higor.restaurantautomation.domain.dto.StandardError
+import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
-import jakarta.persistence.EntityNotFoundException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,7 +10,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import java.time.Instant
 
 @ControllerAdvice
 class ExceptionHandler {
@@ -21,18 +20,8 @@ class ExceptionHandler {
         request: HttpServletRequest,
     ): ResponseEntity<StandardError> {
         return ResponseEntity
-            .status(ex.statusCode)
-            .body(standardErrorFactory(setOf(ex.localizedMessage), request))
-    }
-
-    @ExceptionHandler(EntityNotFoundException::class)
-    fun entityNotFoundException(
-        ex: EntityNotFoundException,
-        request: HttpServletRequest,
-    ): ResponseEntity<StandardError> {
-        return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(standardErrorFactory(setOf("Resource not found"), request))
+            .status(ex.status)
+            .body(standardErrorFactory(ex.code, ex.details, ex.message!!))
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
@@ -43,7 +32,7 @@ class ExceptionHandler {
         val errors = ex.bindingResult.fieldErrors.map { it.defaultMessage!! }.toSet()
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(standardErrorFactory(errors, request))
+            .body(StandardError.from(ApiErrorCodes.BAD_REQUEST, errors))
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
@@ -53,10 +42,14 @@ class ExceptionHandler {
     ): ResponseEntity<StandardError> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(standardErrorFactory(setOf("Invalid Request Body"), request))
+            .body(StandardError.from(ApiErrorCodes.BAD_REQUEST))
     }
 
-    private fun standardErrorFactory(messages: Set<String>, request: HttpServletRequest): StandardError {
-        return StandardError(messages, request.requestURI, Instant.now())
+    private fun standardErrorFactory(code: String, details: String?, message: String): StandardError {
+        return StandardError(
+            code = code,
+            message = message,
+            details = details,
+        )
     }
 }

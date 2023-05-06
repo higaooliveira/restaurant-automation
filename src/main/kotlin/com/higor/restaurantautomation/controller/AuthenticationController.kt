@@ -3,8 +3,8 @@ package com.higor.restaurantautomation.controller
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoOut
 import com.higor.restaurantautomation.domain.dto.RegisterDto
-import com.higor.restaurantautomation.domain.service.AuthenticationService
-import com.higor.restaurantautomation.domain.service.CompanyRegisterService
+import com.higor.restaurantautomation.domain.service.auth.AuthenticationService
+import com.higor.restaurantautomation.domain.service.auth.RegisterService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/office/auth")
+@RequestMapping(AuthenticationController.BASE_ENDPOINT)
 @Validated
 class AuthenticationController(
-    private val companyRegisterService: CompanyRegisterService,
+    private val registerService: RegisterService,
     private val authenticationService: AuthenticationService,
 ) {
 
@@ -29,7 +29,7 @@ class AuthenticationController(
     ): ResponseEntity<AuthenticationDtoOut> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(companyRegisterService.execute(request))
+            .body(registerService.execute(request))
     }
 
     @PostMapping("/authenticate")
@@ -37,5 +37,9 @@ class AuthenticationController(
         @RequestBody request: AuthenticationDtoIn,
     ): ResponseEntity<AuthenticationDtoOut> {
         return ResponseEntity.ok(authenticationService.execute(request))
+    }
+
+    companion object {
+        const val BASE_ENDPOINT = "/api/v1/office/auth"
     }
 }

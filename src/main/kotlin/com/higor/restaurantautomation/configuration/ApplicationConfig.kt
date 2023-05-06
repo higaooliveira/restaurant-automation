@@ -1,7 +1,8 @@
 package com.higor.restaurantautomation.configuration
 
-import com.higor.restaurantautomation.adapters.repository.CompanyRepository
+import com.higor.restaurantautomation.adapters.repository.UserRepository
 import com.higor.restaurantautomation.configuration.security.JWTUtil
+import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,12 +17,12 @@ import kotlin.jvm.Throws
 
 @Configuration
 class ApplicationConfig(
-    private val companyRepository: CompanyRepository
+    private val userRepository: UserRepository,
 ) {
     @Bean
     fun authenticationProvider(): AuthenticationProvider {
         val authenticationProvider = DaoAuthenticationProvider()
-        authenticationProvider.setUserDetailsService(companyDetailsService())
+        authenticationProvider.setUserDetailsService(userDetailsService())
         authenticationProvider.setPasswordEncoder(passwordEncoder())
         return authenticationProvider
     }
@@ -32,10 +33,12 @@ class ApplicationConfig(
     }
 
     @Bean
-    fun companyDetailsService(): UserDetailsService {
+    fun userDetailsService(): UserDetailsService {
         return UserDetailsService { username ->
-             companyRepository
-                .findByEmail(username) ?: throw UsernameNotFoundException("Company Not Found")
+            val user = userRepository
+                .findByEmail(username) ?: throw UsernameNotFoundException("User Not Found")
+
+            UserDetailsImpl(user)
         }
     }
 

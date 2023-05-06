@@ -1,17 +1,14 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.adapters.entity.Company
+import com.higor.restaurantautomation.adapters.entity.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.Date
-import javax.crypto.SecretKey
 
 @Component
 class JWTUtil {
@@ -22,22 +19,22 @@ class JWTUtil {
     @Value("\${jwt.expiration-time}")
     private val expiration: Long = 60
 
-    fun generateToken(userDetails: Company): String  {
+    fun generateToken(userDetails: UserDetailsImpl): String {
         return Jwts
             .builder()
-            .setSubject(userDetails.id.toString())
+            .setSubject(userDetails.getId().toString())
             .setIssuedAt(Date(System.currentTimeMillis()))
             .setExpiration(Date(System.currentTimeMillis() + expiration))
             .signWith(getSignInKey(), SignatureAlgorithm.HS256)
             .compact()
     }
 
-    fun isTokenValid(token: String, company: Company): Boolean {
+    fun isTokenValid(token: String, user: User): Boolean {
         val claims = extractAllClaims(token) ?: return false
 
-        val companyId = claims.subject
+        val userId = claims.subject
 
-        return (companyId == company.id.toString()) && !isTokenExpired(token)
+        return (userId == user.id.toString()) && !isTokenExpired(token)
     }
 
     fun getId(token: String): String? {
@@ -59,10 +56,9 @@ class JWTUtil {
     private fun extractAllClaims(token: String): Claims? {
         return Jwts
             .parserBuilder()
-            .setSigningKey(getSignInKey()   )
+            .setSigningKey(getSignInKey())
             .build()
             .parseClaimsJws(token)
             .body
-
     }
 }
