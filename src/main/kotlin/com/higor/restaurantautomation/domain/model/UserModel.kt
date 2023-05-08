@@ -33,6 +33,19 @@ data class UserModel(
     }
 
     companion object {
+        fun from(other: User): UserModel {
+            return UserModel(
+                id = other.id,
+                name = other.name,
+                email = other.email,
+                password = other.password,
+                role = other.role,
+                companyId = other.company.id!!,
+                createdAt = other.createdAt,
+                updatedAt = other.updatedAt,
+            )
+        }
+
         fun from(other: UserDto): UserModel {
             return UserModel(
                 name = other.name,

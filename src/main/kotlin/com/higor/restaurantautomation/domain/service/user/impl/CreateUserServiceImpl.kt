@@ -22,7 +22,6 @@ class CreateUserServiceImpl(
         }
 
         val company = getCompanyByIdService.execute(data.companyId)
-
         val user = repository.save(data.toEntity(company))
 
         return user.id!!

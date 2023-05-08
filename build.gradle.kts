@@ -4,6 +4,7 @@ val modelMapperVersion = "3.1.1"
 val jwtApiVersion = "0.11.5"
 val fakerVersion = "1.0.2"
 val jUnitVersion = "5.9.3"
+val mockitoKotlin = "4.1.0"
 
 plugins {
     id("org.springframework.boot") version "3.0.6"
@@ -50,7 +51,10 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("junit", "junit")
+        exclude("org.mockito", "mockito")
     }
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlin")
+
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 }

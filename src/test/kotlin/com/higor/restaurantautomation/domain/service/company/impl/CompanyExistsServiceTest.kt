@@ -6,22 +6,22 @@ import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class CompanyExistsServiceTest {
-    private val companyRepository: CompanyRepository = Mockito.mock(CompanyRepository::class.java)
+    private val companyRepository: CompanyRepository = mock {}
 
     private val companyExistsService: CompanyExistsService = CompanyExistsServiceImpl(companyRepository)
 
     @BeforeEach
     fun setup() {
-        Mockito
-            .`when`(companyRepository.existsByDocument(Factory.companyEntity.document))
-            .thenReturn(true)
+        whenever(companyRepository.existsByDocument(Factory.companyEntity.document))
+            .doReturn(true)
 
-        Mockito
-            .`when`(companyRepository.existsByDocument(Factory.invalidDocument))
-            .thenReturn(false)
+        whenever(companyRepository.existsByDocument(Factory.invalidDocument))
+            .doReturn(false)
     }
 
     @Test

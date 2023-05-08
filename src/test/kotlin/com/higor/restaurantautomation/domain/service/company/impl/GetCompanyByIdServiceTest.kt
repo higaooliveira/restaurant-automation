@@ -9,10 +9,13 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class GetCompanyByIdServiceTest {
-    private val companyRepository: CompanyRepository = Mockito.mock(CompanyRepository::class.java)
+    private val companyRepository: CompanyRepository = mock { }
 
     private val getCompanyByIdService: GetCompanyByIdService = GetCompanyByIdServiceImpl(companyRepository)
 
@@ -20,13 +23,11 @@ class GetCompanyByIdServiceTest {
 
     @BeforeEach
     fun setup() {
-        Mockito
-            .`when`(companyRepository.getReferenceById(entity.id!!))
-            .thenReturn(entity)
+        whenever(companyRepository.getReferenceById(entity.id!!))
+            .doReturn(entity)
 
-        Mockito
-            .`when`(companyRepository.getReferenceById(Factory.invalidId))
-            .thenThrow(EntityNotFoundException::class.java)
+        whenever(companyRepository.getReferenceById(Factory.invalidId))
+            .doThrow(EntityNotFoundException::class)
     }
 
     @Test

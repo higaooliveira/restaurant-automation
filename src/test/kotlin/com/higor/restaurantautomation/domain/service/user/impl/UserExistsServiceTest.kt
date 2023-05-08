@@ -6,22 +6,22 @@ import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class UserExistsServiceTest {
-    private val userRepository: UserRepository = Mockito.mock(UserRepository::class.java)
+    private val userRepository: UserRepository = mock {}
 
     private val userExistsService: UserExistsService = UserExistsServiceImpl(userRepository)
 
     @BeforeEach
     fun setup() {
-        Mockito
-            .`when`(userRepository.existsByEmail(Factory.userEntity.email))
-            .thenReturn(true)
+        whenever(userRepository.existsByEmail(Factory.userEntity.email))
+            .doReturn(true)
 
-        Mockito
-            .`when`(userRepository.existsByEmail(Factory.invalidEmail))
-            .thenReturn(false)
+        whenever(userRepository.existsByEmail(Factory.invalidEmail))
+            .doReturn(false)
     }
 
     @Test

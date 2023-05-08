@@ -7,10 +7,7 @@ import com.higor.restaurantautomation.domain.dto.RegisterDto
 import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.auth.RegisterService
-import com.higor.restaurantautomation.domain.service.company.CompanyExistsService
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService
-import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
-import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import org.springframework.stereotype.Service
@@ -19,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class RegisterServiceImpl(
-    private val companyExistsService: CompanyExistsService,
     private val createCompanyService: CreateCompanyService,
     private val createUserService: CreateUserService,
     private val getUserByIdService: GetUserByIdService,
@@ -29,10 +25,6 @@ class RegisterServiceImpl(
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     override fun execute(request: RegisterDto): AuthenticationDtoOut {
         val companyModel = CompanyModel.from(request)
-
-        if (companyExistsService.execute(companyModel.document)) {
-            throw ApiException(ApiErrorCodes.COMPANY_EXISTS)
-        }
 
         val companyId = createCompanyService.execute(companyModel)
 

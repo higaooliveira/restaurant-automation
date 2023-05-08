@@ -27,6 +27,17 @@ data class CompanyModel(
 
     companion object {
 
+        fun from(other: Company): CompanyModel {
+            return CompanyModel(
+                id = other.id!!,
+                socialName = other.socialName,
+                fantasyName = other.fantasyName,
+                phone = other.phone,
+                document = other.document,
+                createdAt = other.createdAt,
+            )
+        }
+
         fun from(other: RegisterDto): CompanyModel {
             return CompanyModel(
                 socialName = other.socialName,

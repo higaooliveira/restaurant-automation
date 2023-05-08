@@ -9,11 +9,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class GetUserByIdServiceTest {
 
-    private val userRepository: UserRepository = Mockito.mock(UserRepository::class.java)
+    private val userRepository: UserRepository = mock {}
 
     private val getUserByIdService: GetUserByIdService = GetUserByIdServiceImpl(userRepository)
 
@@ -21,13 +24,11 @@ class GetUserByIdServiceTest {
 
     @BeforeEach
     fun setup() {
-        Mockito
-            .`when`(userRepository.getReferenceById(entity.id!!))
-            .thenReturn(entity)
+        whenever(userRepository.getReferenceById(entity.id!!))
+            .doReturn(entity)
 
-        Mockito
-            .`when`(userRepository.getReferenceById(Factory.invalidId))
-            .thenThrow(EntityNotFoundException::class.java)
+        whenever(userRepository.getReferenceById(Factory.invalidId))
+            .doThrow(EntityNotFoundException::class)
     }
 
     @Test
