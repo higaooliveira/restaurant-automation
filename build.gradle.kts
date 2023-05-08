@@ -1,5 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val modelMapperVersion = "3.1.1"
+val jwtApiVersion = "0.11.5"
+val fakerVersion = "1.0.2"
+val jUnitVersion = "5.9.3"
+
 plugins {
     id("org.springframework.boot") version "3.0.6"
     id("io.spring.dependency-management") version "1.1.0"
@@ -35,17 +40,19 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.postgresql:postgresql")
-    implementation("org.modelmapper:modelmapper:2.4.1")
-    implementation("com.google.zxing:core:3.3.2")
-    implementation("com.google.zxing:javase:3.3.2")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("org.modelmapper:modelmapper:$modelMapperVersion")
+    implementation("io.jsonwebtoken:jjwt-api:$jwtApiVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jwtApiVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jwtApiVersion")
 
     /* Tests */
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("com.github.javafaker:javafaker:1.0.2")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude("junit", "junit")
+    }
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("junit:junit:4.13")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 }
 
 tasks.withType<KotlinCompile> {
