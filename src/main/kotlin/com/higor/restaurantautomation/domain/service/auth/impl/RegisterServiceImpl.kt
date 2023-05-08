@@ -42,10 +42,10 @@ class RegisterServiceImpl(
 
         val user = getUserByIdService.execute(userId)
 
-        val jwtToken = jwtUtil.generateToken(UserDetailsImpl(user))
+        val accessToken = jwtUtil.generateToken(UserDetailsImpl(user))
 
         return AuthenticationDtoOut(
-            accessToken = jwtToken,
+            accessToken = accessToken,
         )
     }
 }
