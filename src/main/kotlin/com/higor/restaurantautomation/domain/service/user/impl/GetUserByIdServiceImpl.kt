@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -15,6 +16,7 @@ class GetUserByIdServiceImpl(
 ) : GetUserByIdService {
 
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = ["userCache"], key = "#id")
     override fun execute(id: UUID): UserModel {
         return repository
             .findById(id)
