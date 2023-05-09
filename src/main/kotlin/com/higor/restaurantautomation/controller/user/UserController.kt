@@ -4,10 +4,12 @@ import com.higor.restaurantautomation.domain.dto.UserDtoIn
 import com.higor.restaurantautomation.domain.dto.UserDtoOut
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
+import com.higor.restaurantautomation.domain.service.user.DeleteUserService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,6 +25,7 @@ import java.util.UUID
 class UserController(
     private val createUserService: CreateUserService,
     private val getUserByIdService: GetUserByIdService,
+    private val deleteUserService: DeleteUserService,
 ) {
 
     @GetMapping("/{id}")
@@ -42,6 +45,14 @@ class UserController(
         val userId = createUserService.execute(UserModel.from(data))
         return ResponseEntity
             .created(URI.create("$BASE_ENDPOINT/$userId")).build()
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(
+        @PathVariable id: UUID,
+    ): ResponseEntity<Unit> {
+        deleteUserService.execute(id)
+        return ResponseEntity.noContent().build()
     }
 
     companion object {
