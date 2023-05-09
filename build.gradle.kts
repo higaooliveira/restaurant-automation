@@ -1,3 +1,4 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val modelMapperVersion = "3.1.1"
@@ -13,6 +14,7 @@ plugins {
     kotlin("plugin.allopen") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
+    id("com.adarshr.test-logger") version "3.2.0"
 }
 
 group = "com.higor"
@@ -57,6 +59,26 @@ dependencies {
 
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+}
+
+testlogger {
+    theme = ThemeType.MOCHA_PARALLEL
+    showExceptions = true
+    showStackTraces = true
+    showFullStackTraces = false
+    showCauses = true
+    slowThreshold = 2000
+    showSummary = true
+    showSimpleNames = false
+    showPassed = true
+    showSkipped = true
+    showFailed = true
+    showOnlySlow = false
+    showStandardStreams = false
+    showPassedStandardStreams = true
+    showSkippedStandardStreams = true
+    showFailedStandardStreams = true
+    logLevel = LogLevel.LIFECYCLE
 }
 
 tasks.withType<KotlinCompile> {
