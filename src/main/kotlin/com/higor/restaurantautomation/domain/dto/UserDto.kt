@@ -1,8 +1,10 @@
 package com.higor.restaurantautomation.domain.dto
 
 import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.utils.validators.Email
 import jakarta.validation.constraints.NotBlank
+import java.time.Instant
 import java.util.UUID
 
 data class UserDtoIn(
@@ -22,3 +24,25 @@ data class UserDtoIn(
     @NotBlank(message = "Company id is required")
     val companyId: UUID,
 )
+
+data class UserDtoOut(
+    val id: UUID,
+    val name: String,
+    val email: String,
+    val role: Role,
+    val companyId: UUID,
+    val createdAt: Instant,
+) {
+    companion object {
+        fun from(other: UserModel): UserDtoOut {
+            return UserDtoOut(
+                id = other.id!!,
+                name = other.name,
+                email = other.email,
+                role = other.role,
+                companyId = other.companyId,
+                createdAt = other.createdAt,
+            )
+        }
+    }
+}
