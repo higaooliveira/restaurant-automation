@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.controller
+package com.higor.restaurantautomation.controller.auth
 
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoOut

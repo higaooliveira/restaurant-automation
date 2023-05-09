@@ -22,7 +22,9 @@ data class RegisterDto(
     @NotBlank(message = "Email is required")
     val userEmail: String,
 
+    @NotBlank(message = "user name is required")
     val userName: String,
+
     @NotBlank(message = "Password is required")
     val password: String,
 

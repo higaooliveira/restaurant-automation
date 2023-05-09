@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.adapters.entity.User
+import com.higor.restaurantautomation.domain.model.UserModel
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -29,7 +29,7 @@ class JWTUtil {
             .compact()
     }
 
-    fun isTokenValid(token: String, user: User): Boolean {
+    fun isTokenValid(token: String, user: UserModel): Boolean {
         val claims = extractAllClaims(token) ?: return false
 
         val userId = claims.subject

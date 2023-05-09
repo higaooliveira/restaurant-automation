@@ -39,7 +39,7 @@ class RegisterServiceTest {
             .doReturn(Factory.userEntity.id!!)
 
         whenever(getUserByIdService.execute(any()))
-            .doReturn(Factory.userEntity)
+            .doReturn(Factory.userModel)
 
         whenever(jwtUtil.generateToken(any()))
             .doReturn("My fake JWT")

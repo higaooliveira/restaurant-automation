@@ -8,6 +8,7 @@ import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.UserExistsService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
@@ -16,6 +17,8 @@ class CreateUserServiceImpl(
     private val userExistsService: UserExistsService,
     private val getCompanyByIdService: GetCompanyByIdService,
 ) : CreateUserService {
+
+    @Transactional
     override fun execute(data: UserModel): UUID {
         if (userExistsService.execute(data.email)) {
             throw ApiException(ApiErrorCodes.USER_EXISTS)

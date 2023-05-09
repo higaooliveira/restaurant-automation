@@ -17,6 +17,7 @@ data class CompanyModel(
 
     fun toEntity(): Company {
         return Company(
+            id = id,
             socialName = socialName,
             fantasyName = fantasyName,
             phone = phone,

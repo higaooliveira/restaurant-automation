@@ -1,12 +1,12 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.adapters.entity.User
+import com.higor.restaurantautomation.domain.model.UserModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.UUID
 
-class UserDetailsImpl(private val user: User) : UserDetails {
+class UserDetailsImpl(private val user: UserModel) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(SimpleGrantedAuthority(user.role.name))
     }

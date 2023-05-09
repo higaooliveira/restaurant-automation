@@ -3,6 +3,7 @@ package com.higor.restaurantautomation.configuration
 import com.higor.restaurantautomation.adapters.repository.UserRepository
 import com.higor.restaurantautomation.configuration.security.JWTUtil
 import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
+import com.higor.restaurantautomation.domain.model.UserModel
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -37,8 +38,7 @@ class ApplicationConfig(
         return UserDetailsService { username ->
             val user = userRepository
                 .findByEmail(username) ?: throw UsernameNotFoundException("User Not Found")
-
-            UserDetailsImpl(user)
+            UserDetailsImpl(UserModel.from(user))
         }
     }
 

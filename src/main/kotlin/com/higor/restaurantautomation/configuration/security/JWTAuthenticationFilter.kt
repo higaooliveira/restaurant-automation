@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import com.higor.restaurantautomation.utils.extensions.toUUID
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Component
 class JWTAuthenticationFilter(
     private val jwtUtil: JWTUtil,
-    private val userRepository: UserRepository,
+    private val getUserByIdService: GetUserByIdService,
 ) : OncePerRequestFilter() {
 
     private val authorization = "Authorization"
@@ -32,12 +32,13 @@ class JWTAuthenticationFilter(
         val userId = jwtUtil.getId(jwt)
 
         if (userId != null && SecurityContextHolder.getContext().authentication == null) {
-            val user = userRepository.getReferenceById(userId.toUUID())
+            val user = getUserByIdService.execute(userId.toUUID())
             val userDetails = UserDetailsImpl(user)
             if (jwtUtil.isTokenValid(jwt, user)) {
                 val authToken = UsernamePasswordAuthenticationToken(user, null, userDetails.authorities)
                 authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authToken
+
                 request.setAttribute("userId", user.id)
             }
         }

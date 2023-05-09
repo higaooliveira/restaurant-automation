@@ -1,5 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
+import com.higor.restaurantautomation.adapters.entity.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -25,6 +26,7 @@ class SecurityConfig(
             .authorizeHttpRequests()
             .requestMatchers(HttpMethod.POST, "/api/v1/office/auth/**")
             .permitAll()
+            .requestMatchers("/api/v1/office/user**").hasAuthority(Role.ADMIN.name)
             .anyRequest()
             .authenticated()
             .and()

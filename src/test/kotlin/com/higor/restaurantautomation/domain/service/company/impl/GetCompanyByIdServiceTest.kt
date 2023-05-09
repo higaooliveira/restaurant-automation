@@ -4,15 +4,14 @@ import com.higor.restaurantautomation.adapters.repository.CompanyRepository
 import com.higor.restaurantautomation.domain.service.company.GetCompanyByIdService
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.utils.factories.Factory
-import jakarta.persistence.EntityNotFoundException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import java.util.Optional
 
 class GetCompanyByIdServiceTest {
     private val companyRepository: CompanyRepository = mock { }
@@ -23,11 +22,11 @@ class GetCompanyByIdServiceTest {
 
     @BeforeEach
     fun setup() {
-        whenever(companyRepository.getReferenceById(entity.id!!))
-            .doReturn(entity)
+        whenever(companyRepository.findById(entity.id!!))
+            .doReturn(Optional.of(entity))
 
-        whenever(companyRepository.getReferenceById(Factory.invalidId))
-            .doThrow(EntityNotFoundException::class)
+        whenever(companyRepository.findById(Factory.invalidId))
+            .doReturn(Optional.empty())
     }
 
     @Test

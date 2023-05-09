@@ -1,6 +1,7 @@
 package com.higor.restaurantautomation.domain.service.user.impl
 
 import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.company.GetCompanyByIdService
 import com.higor.restaurantautomation.domain.service.exception.ApiException
@@ -39,7 +40,7 @@ class CreateUserServiceTest {
             .doReturn(false)
 
         whenever(getCompanyByIdService.execute(entity.company.id!!))
-            .doReturn(Factory.companyEntity)
+            .doReturn(CompanyModel.from(Factory.companyEntity))
 
         whenever(userRepository.save(Mockito.any()))
             .doReturn(entity)

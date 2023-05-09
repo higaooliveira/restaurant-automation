@@ -1,10 +1,9 @@
 package com.higor.restaurantautomation.domain.model
 
-import com.higor.restaurantautomation.adapters.entity.Company
 import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.domain.dto.RegisterDto
-import com.higor.restaurantautomation.domain.dto.UserDto
+import com.higor.restaurantautomation.domain.dto.UserDtoIn
 import com.higor.restaurantautomation.utils.PasswordHelper
 import java.time.Instant
 import java.util.UUID
@@ -20,13 +19,13 @@ data class UserModel(
     val updatedAt: Instant? = null,
 ) {
 
-    fun toEntity(company: Company): User {
+    fun toEntity(company: CompanyModel): User {
         return User(
             name = name,
             email = email,
             password = password,
             role = role,
-            company = company,
+            company = company.toEntity(),
             createdAt = createdAt,
             updatedAt = updatedAt,
         )
@@ -46,7 +45,7 @@ data class UserModel(
             )
         }
 
-        fun from(other: UserDto): UserModel {
+        fun from(other: UserDtoIn): UserModel {
             return UserModel(
                 name = other.name,
                 email = other.email,

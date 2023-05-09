@@ -33,7 +33,7 @@ class AuthenticationServiceTest {
             .doReturn(authentication)
 
         whenever(userDetailsService.loadUserByUsername(Factory.authenticationDtoIn.email))
-            .doReturn(UserDetailsImpl(Factory.userEntity))
+            .doReturn(UserDetailsImpl(Factory.userModel))
 
         whenever(jwtUtil.generateToken(any()))
             .doReturn("My fake JWT")
