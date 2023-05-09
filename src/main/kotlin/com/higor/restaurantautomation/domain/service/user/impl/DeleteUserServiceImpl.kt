@@ -17,7 +17,6 @@ class DeleteUserServiceImpl(
     @Transactional
     @CacheEvict(cacheNames = ["userCache"], key = "#id")
     override fun execute(id: UUID) {
-        println("Cheguei service")
         runCatching {
             repository.deleteById(id)
         }.getOrElse {
