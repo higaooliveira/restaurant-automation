@@ -19,7 +19,11 @@ class LoggingInterceptor : HandlerInterceptor {
     ) {
         with(request) {
             val attributes = mutableMapOf<String, String>()
-            attributes["userId"] = getAttribute("userId").toString()
+
+            if (attributeNames.asSequence().toList().contains("userId")) {
+                attributes["userId"] = getAttribute("userId").toString()
+            }
+
             attributes["requestId"] = requestId
             val message = buildString {
                 append(method)
