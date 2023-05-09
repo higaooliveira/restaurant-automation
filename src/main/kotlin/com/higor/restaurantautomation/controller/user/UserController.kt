@@ -21,18 +21,6 @@ class UserController(
 ) {
 
     @PostMapping
-    fun list(
-        @Valid @RequestBody
-        data: UserDtoIn,
-    ): ResponseEntity<UUID> {
-        println("Estou aqui")
-        val userId = createUserService.execute(UserModel.from(data))
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(userId)
-    }
-
-    @PostMapping
     fun create(
         @Valid @RequestBody
         data: UserDtoIn,
