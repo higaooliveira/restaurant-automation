@@ -6,6 +6,7 @@ val jwtApiVersion = "0.11.5"
 val fakerVersion = "1.0.2"
 val jUnitVersion = "5.9.3"
 val mockitoKotlin = "4.1.0"
+val flyway = "9.17.0"
 
 plugins {
     id("org.springframework.boot") version "3.0.6"
@@ -40,6 +41,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-cache")
 
     /* Custom */
+    implementation("org.flywaydb:flyway-core:$flyway")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
