@@ -16,6 +16,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/restaurant-automation
   jackson:
     default-property-inclusion: non_null
+  flyway:
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    user: restaurant-automation
+    password: root
 
 jwt:
   expiration-time: ${JWT_EXPIRATION_TIME}

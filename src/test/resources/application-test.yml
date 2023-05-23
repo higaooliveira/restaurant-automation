@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+  flyway:
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    user: restaurant-automation
+    password: root

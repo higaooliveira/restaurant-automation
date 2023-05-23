@@ -7,6 +7,7 @@ val fakerVersion = "1.0.2"
 val jUnitVersion = "5.9.3"
 val mockitoKotlin = "4.1.0"
 val flyway = "9.17.0"
+val testContainers = "1.17.6"
 
 plugins {
     id("org.springframework.boot") version "3.0.6"
@@ -53,15 +54,16 @@ dependencies {
 
     /* Tests */
     implementation("com.github.javafaker:javafaker:1.0.2")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("junit", "junit")
         exclude("org.mockito", "mockito")
     }
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlin")
-
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+    testImplementation("org.testcontainers:testcontainers:$testContainers")
+    testImplementation("org.testcontainers:junit-jupiter:$testContainers")
+    testImplementation("org.testcontainers:postgresql:$testContainers")
 }
 
 testlogger {
