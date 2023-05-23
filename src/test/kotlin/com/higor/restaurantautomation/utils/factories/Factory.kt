@@ -6,6 +6,7 @@ import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
 import com.higor.restaurantautomation.domain.dto.RegisterDto
+import com.higor.restaurantautomation.domain.dto.UserDtoIn
 import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.utils.extensions.toUUID
@@ -79,16 +80,7 @@ object Factory {
         )
     }
 
-    val companyModel: CompanyModel by lazy {
-        CompanyModel(
-            socialName = companyEntity.socialName,
-            fantasyName = companyEntity.fantasyName,
-            phone = companyEntity.phone,
-            document = companyEntity.document,
-        )
-    }
-
-    val registerDto: RegisterDto by lazy {
+    val registerDtoUT: RegisterDto by lazy {
         RegisterDto(
             socialName = companyEntity.socialName,
             fantasyName = companyEntity.fantasyName,
@@ -100,10 +92,32 @@ object Factory {
         )
     }
 
+    val registerDtoIT: RegisterDto by lazy {
+        RegisterDto(
+            socialName = faker.company().name(),
+            fantasyName = faker.company().name(),
+            phone = faker.phoneNumber().cellPhone(),
+            document = "010010001",
+            userEmail = faker.internet().emailAddress(),
+            userName = faker.name().fullName(),
+            password = faker.internet().password(),
+        )
+    }
+
     val authenticationDtoIn: AuthenticationDtoIn by lazy {
         AuthenticationDtoIn(
             email = userEntity.email,
             password = userEntity.password,
+        )
+    }
+
+    val userDtoIn: UserDtoIn by lazy {
+        UserDtoIn(
+            name = faker.name().fullName(),
+            companyId = UUID.randomUUID(),
+            email = faker.internet().emailAddress(),
+            password = faker.internet().password(),
+            role = Role.USER,
         )
     }
 }

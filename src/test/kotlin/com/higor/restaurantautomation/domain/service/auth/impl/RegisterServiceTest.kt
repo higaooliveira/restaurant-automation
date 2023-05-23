@@ -47,7 +47,7 @@ class RegisterServiceTest {
 
     @Test
     fun `Should register process be completed`() {
-        val actualJwt = registerService.execute(Factory.registerDto)
+        val actualJwt = registerService.execute(Factory.registerDtoUT)
         val expectedJwt = "My fake JWT"
         assertEquals(expectedJwt, actualJwt.accessToken)
     }
