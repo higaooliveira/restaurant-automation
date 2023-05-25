@@ -27,9 +27,6 @@ class Company(
     @Column(name = "fantasy_name")
     var fantasyName: String,
 
-    @Column(name = "phone")
-    var phone: String,
-
     @Column(name = "document", unique = true)
     var document: String,
 

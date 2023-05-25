@@ -18,6 +18,9 @@ data class UserDtoIn(
     @NotBlank(message = "Password is required")
     val password: String,
 
+    @NotBlank(message = "Phone is required")
+    val phone: String,
+
     @NotBlank(message = "Role is required")
     val role: Role,
 
@@ -46,3 +49,9 @@ data class UserDtoOut(
         }
     }
 }
+
+data class UpdateUserDtoIn(
+    val id: UUID,
+    val name: String?,
+
+)

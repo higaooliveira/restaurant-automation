@@ -35,6 +35,9 @@ class User(
     @Enumerated(EnumType.STRING)
     var role: Role,
 
+    @Column(name = "phone")
+    var phone: String,
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.REFRESH])
     @JoinColumn(name = "company_id", nullable = false)
     var company: Company,

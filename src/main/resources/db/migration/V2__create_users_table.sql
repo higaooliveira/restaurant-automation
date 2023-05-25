@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users
     email      VARCHAR(255),
     password   VARCHAR(255),
     role       VARCHAR(255),
+    phone        VARCHAR(255),
     company_id UUID NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE,
     updated_at TIMESTAMP WITHOUT TIME ZONE,

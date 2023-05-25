@@ -8,6 +8,7 @@ class PostgresContainer {
     companion object {
         private const val username = "restaurant-automation"
         private const val password = "root"
+
         fun buildContainer(): PostgreSQLContainer<out PostgreSQLContainer<*>> {
             return PostgreSQLContainer<Nothing>("postgres:11.1").apply {
                 withDatabaseName(Companion.username)
@@ -19,7 +20,6 @@ class PostgresContainer {
         }
 
         fun buildProperties(instance: PostgreSQLContainer<out PostgreSQLContainer<*>>): TestPropertyValues {
-            println(instance.getJdbcUrl())
             return TestPropertyValues.of(
                 "spring.datasource.url=${instance.jdbcUrl}",
                 "spring.datasource.username=$username",

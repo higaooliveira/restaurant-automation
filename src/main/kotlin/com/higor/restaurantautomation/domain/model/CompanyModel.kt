@@ -9,7 +9,6 @@ data class CompanyModel(
     val id: UUID? = null,
     val socialName: String,
     val fantasyName: String,
-    val phone: String,
     val document: String,
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant? = null,
@@ -20,7 +19,6 @@ data class CompanyModel(
             id = id,
             socialName = socialName,
             fantasyName = fantasyName,
-            phone = phone,
             document = document,
             createdAt = createdAt,
         )
@@ -33,7 +31,6 @@ data class CompanyModel(
                 id = other.id!!,
                 socialName = other.socialName,
                 fantasyName = other.fantasyName,
-                phone = other.phone,
                 document = other.document,
                 createdAt = other.createdAt,
             )
@@ -43,7 +40,6 @@ data class CompanyModel(
             return CompanyModel(
                 socialName = other.socialName,
                 fantasyName = other.fantasyName,
-                phone = other.phone,
                 document = other.document,
             )
         }
