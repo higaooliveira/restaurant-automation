@@ -3,8 +3,8 @@ package com.higor.restaurantautomation.controller.auth
 import com.higor.restaurantautomation.BaseITTest
 import com.higor.restaurantautomation.adapters.entity.Company
 import com.higor.restaurantautomation.adapters.entity.User
-import com.higor.restaurantautomation.adapters.repository.CompanyRepository
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.adapters.repository.company.CompanyRepository
+import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
 import com.higor.restaurantautomation.utils.PasswordHelper
 import com.higor.restaurantautomation.utils.factories.Factory

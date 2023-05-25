@@ -1,12 +1,17 @@
 package com.higor.restaurantautomation.controller.user
 
+import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.domain.dto.UserDtoIn
 import com.higor.restaurantautomation.domain.dto.UserDtoOut
+import com.higor.restaurantautomation.domain.dto.UsersFilter
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.DeleteUserService
+import com.higor.restaurantautomation.domain.service.user.GetAllUsersService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 import java.util.UUID
@@ -26,7 +32,27 @@ class UserController(
     private val createUserService: CreateUserService,
     private val getUserByIdService: GetUserByIdService,
     private val deleteUserService: DeleteUserService,
+    private val getAllUsersService: GetAllUsersService,
 ) {
+
+    @GetMapping
+    fun list(
+        @RequestParam("email") email: String?,
+        @RequestParam("role") role: Role?,
+        @RequestParam("name") name: String?,
+        @RequestParam("phone") phone: String?,
+        pagination: Pageable,
+    ): ResponseEntity<Page<UserDtoOut>> {
+        val filter = UsersFilter(
+            email = email,
+            role = role,
+            name = name,
+            phone = phone,
+        )
+        val pagedUsers = getAllUsersService.execute(filter, pagination)
+
+        return ResponseEntity.ok(pagedUsers)
+    }
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: UUID): ResponseEntity<UserDtoOut> {
@@ -46,12 +72,6 @@ class UserController(
         return ResponseEntity
             .created(URI.create("$BASE_ENDPOINT/$userId")).build()
     }
-
-//    @PutMapping
-//    fun update(
-//        @Valid @RequestBody
-//        data:
-//    )
 
     @DeleteMapping("/{id}")
     fun delete(

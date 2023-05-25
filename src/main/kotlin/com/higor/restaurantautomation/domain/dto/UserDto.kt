@@ -50,8 +50,9 @@ data class UserDtoOut(
     }
 }
 
-data class UpdateUserDtoIn(
-    val id: UUID,
+data class UsersFilter(
+    val email: String?,
     val name: String?,
-
+    val role: Role?,
+    val phone: String?,
 )
