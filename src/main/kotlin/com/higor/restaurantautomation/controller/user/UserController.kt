@@ -1,6 +1,7 @@
 package com.higor.restaurantautomation.controller.user
 
 import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.domain.dto.PaginationDto
 import com.higor.restaurantautomation.domain.dto.UserDtoIn
 import com.higor.restaurantautomation.domain.dto.UserDtoOut
 import com.higor.restaurantautomation.domain.dto.UsersFilter
@@ -10,7 +11,6 @@ import com.higor.restaurantautomation.domain.service.user.DeleteUserService
 import com.higor.restaurantautomation.domain.service.user.GetAllUsersService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import jakarta.validation.Valid
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -42,7 +42,7 @@ class UserController(
         @RequestParam("name") name: String?,
         @RequestParam("phone") phone: String?,
         pagination: Pageable,
-    ): ResponseEntity<Page<UserDtoOut>> {
+    ): ResponseEntity<PaginationDto<UserDtoOut>> {
         val filter = UsersFilter(
             email = email,
             role = role,
