@@ -47,6 +47,12 @@ class UserController(
             .created(URI.create("$BASE_ENDPOINT/$userId")).build()
     }
 
+//    @PutMapping
+//    fun update(
+//        @Valid @RequestBody
+//        data:
+//    )
+
     @DeleteMapping("/{id}")
     fun delete(
         @PathVariable id: UUID,

@@ -86,6 +86,7 @@ class UserControllerTest : BaseITTest() {
             email = savedUser.email,
             password = savedUser.password,
             companyId = companyId,
+            phone = savedUser.phone,
             role = savedUser.role,
         )
 

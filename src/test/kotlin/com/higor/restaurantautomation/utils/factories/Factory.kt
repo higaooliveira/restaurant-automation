@@ -33,7 +33,6 @@ object Factory {
             socialName = faker.company().name(),
             fantasyName = faker.company().name(),
             document = "01001000",
-            phone = faker.phoneNumber().cellPhone(),
             createdAt = faker.date().birthday().toInstant(),
         )
     }
@@ -44,6 +43,7 @@ object Factory {
             name = faker.name().fullName(),
             email = faker.internet().emailAddress(),
             password = faker.internet().password(),
+            phone = faker.phoneNumber().cellPhone(),
             role = Role.ADMIN,
             company = companyEntity,
         )
@@ -56,6 +56,7 @@ object Factory {
             password = userEntity.password,
             role = Role.ADMIN,
             companyId = userEntity.company.id!!,
+            phone = faker.phoneNumber().cellPhone(),
             createdAt = userEntity.createdAt,
         )
     }
@@ -66,6 +67,7 @@ object Factory {
             email = userEntity.email,
             password = userEntity.password,
             role = Role.ADMIN,
+            phone = faker.phoneNumber().cellPhone(),
             companyId = userEntity.company.id!!,
             createdAt = userEntity.createdAt,
         )
@@ -75,7 +77,6 @@ object Factory {
         CompanyModel(
             socialName = companyEntity.socialName,
             fantasyName = companyEntity.fantasyName,
-            phone = companyEntity.phone,
             document = invalidDocument,
         )
     }
@@ -84,7 +85,7 @@ object Factory {
         RegisterDto(
             socialName = companyEntity.socialName,
             fantasyName = companyEntity.fantasyName,
-            phone = companyEntity.phone,
+            phone = userEntity.phone,
             document = companyEntity.document,
             userEmail = userEntity.email,
             userName = userEntity.name,
@@ -118,6 +119,7 @@ object Factory {
             email = faker.internet().emailAddress(),
             password = faker.internet().password(),
             role = Role.USER,
+            phone = faker.phoneNumber().cellPhone(),
         )
     }
 }

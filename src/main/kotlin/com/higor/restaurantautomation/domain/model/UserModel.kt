@@ -13,6 +13,7 @@ data class UserModel(
     val name: String,
     val email: String,
     val password: String,
+    val phone: String,
     val role: Role,
     val createdAt: Instant,
     val companyId: UUID,
@@ -25,6 +26,7 @@ data class UserModel(
             email = email,
             password = password,
             role = role,
+            phone = phone,
             company = company.toEntity(),
             createdAt = createdAt,
             updatedAt = updatedAt,
@@ -41,6 +43,7 @@ data class UserModel(
                 role = other.role,
                 companyId = other.company.id!!,
                 createdAt = other.createdAt,
+                phone = other.phone,
                 updatedAt = other.updatedAt,
             )
         }
@@ -52,6 +55,7 @@ data class UserModel(
                 password = PasswordHelper.encode(other.password),
                 role = other.role,
                 companyId = other.companyId,
+                phone = other.phone,
                 createdAt = Instant.now(),
             )
         }
@@ -62,6 +66,7 @@ data class UserModel(
                 email = other.userEmail,
                 password = PasswordHelper.encode(other.password),
                 role = Role.ADMIN,
+                phone = other.phone,
                 companyId = companyId,
                 createdAt = Instant.now(),
             )
