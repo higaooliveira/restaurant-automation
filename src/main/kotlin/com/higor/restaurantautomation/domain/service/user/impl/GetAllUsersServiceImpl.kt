@@ -21,20 +21,19 @@ class GetAllUsersServiceImpl(
             .and(UserFilters.phone(filter.phone))
             .and(UserFilters.role(filter.role))
 
-        val allUsers = userRepository.findAll(filters, pagination)
+        val usersPagination = userRepository.findAll(filters, pagination)
+        val users = usersPagination
+            .content
+            .map(UserModel::from)
+            .map(UserDtoOut::from)
 
         return PaginationDto
             .Builder<UserDtoOut>()
-            .list(
-                allUsers
-                    .content
-                    .map(UserModel::from)
-                    .map(UserDtoOut::from),
-            )
-            .page(allUsers.pageable.pageNumber)
-            .totalPages(allUsers.totalPages)
-            .totalRecords(allUsers.totalElements.toInt())
-            .last(allUsers.isLast)
+            .list(users)
+            .page(usersPagination.pageable.pageNumber)
+            .totalPages(usersPagination.totalPages)
+            .totalRecords(usersPagination.totalElements.toInt())
+            .last(usersPagination.isLast)
             .build()
     }
 }

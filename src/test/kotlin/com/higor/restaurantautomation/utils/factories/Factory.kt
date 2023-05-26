@@ -49,6 +49,18 @@ object Factory {
         )
     }
 
+    val user: User by lazy {
+        User(
+            id = "23b75d42-05a8-4a23-bc7b-4baf35f60f52".toUUID(),
+            name = faker.name().fullName(),
+            email = faker.internet().emailAddress(),
+            password = faker.internet().password(),
+            phone = faker.phoneNumber().cellPhone(),
+            role = Role.ADMIN,
+            company = companyEntity,
+        )
+    }
+
     val existentUser: UserModel by lazy {
         UserModel(
             name = userEntity.name,
