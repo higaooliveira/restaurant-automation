@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration
 
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.configuration.security.JWTUtil
 import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
 import com.higor.restaurantautomation.domain.model.UserModel

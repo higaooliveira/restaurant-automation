@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.user.impl
 
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.service.user.UserExistsService
 import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.Assertions.assertEquals

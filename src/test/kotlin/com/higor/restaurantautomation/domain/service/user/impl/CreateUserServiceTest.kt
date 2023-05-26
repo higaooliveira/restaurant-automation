@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.user.impl
 
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.company.GetCompanyByIdService

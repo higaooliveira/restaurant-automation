@@ -32,10 +32,12 @@ data class UserDtoOut(
     val id: UUID,
     val name: String,
     val email: String,
+    val phone: String,
     val role: Role,
     val companyId: UUID,
     val createdAt: Instant,
 ) {
+
     companion object {
         fun from(other: UserModel): UserDtoOut {
             return UserDtoOut(
@@ -43,6 +45,7 @@ data class UserDtoOut(
                 name = other.name,
                 email = other.email,
                 role = other.role,
+                phone = other.phone,
                 companyId = other.companyId,
                 createdAt = other.createdAt,
             )
@@ -50,8 +53,9 @@ data class UserDtoOut(
     }
 }
 
-data class UpdateUserDtoIn(
-    val id: UUID,
-    val name: String?,
-
+data class UsersFilter(
+    val email: String? = null,
+    val name: String? = null,
+    val role: Role? = null,
+    val phone: String? = null,
 )

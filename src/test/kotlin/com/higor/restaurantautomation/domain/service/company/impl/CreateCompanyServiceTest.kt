@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.company.impl
 
-import com.higor.restaurantautomation.adapters.repository.CompanyRepository
+import com.higor.restaurantautomation.adapters.repository.company.CompanyRepository
 import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.service.company.CompanyExistsService
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService

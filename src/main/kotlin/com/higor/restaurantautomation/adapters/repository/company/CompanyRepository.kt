@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.adapters.repository
+package com.higor.restaurantautomation.adapters.repository.company
 
 import com.higor.restaurantautomation.adapters.entity.Company
 import org.springframework.data.jpa.repository.JpaRepository

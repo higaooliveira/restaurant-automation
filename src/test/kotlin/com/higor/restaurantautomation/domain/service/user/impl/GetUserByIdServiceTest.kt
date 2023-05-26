@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.user.impl
 
-import com.higor.restaurantautomation.adapters.repository.UserRepository
+import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
 import com.higor.restaurantautomation.utils.factories.Factory

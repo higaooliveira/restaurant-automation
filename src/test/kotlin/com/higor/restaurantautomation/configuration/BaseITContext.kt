@@ -11,9 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner
 @ActiveProfiles("test")
 @ContextConfiguration(
     classes = [BaseITConfiguration::class],
-    initializers = [BaseITInitializer::class]
+    initializers = [BaseITInitializer::class],
 )
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner::class)
 class BaseITContext
-

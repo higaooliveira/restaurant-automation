@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.company.impl
 
-import com.higor.restaurantautomation.adapters.repository.CompanyRepository
+import com.higor.restaurantautomation.adapters.repository.company.CompanyRepository
 import com.higor.restaurantautomation.domain.service.company.GetCompanyByIdService
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.utils.factories.Factory
