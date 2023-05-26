@@ -24,7 +24,7 @@ object UserFilters {
     fun email(email: String?): Specification<User> {
         return Specification { root, _, criteriaBuilder ->
             email?.let {
-                criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), it.lowercase())
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("email")), it.lowercase())
             }
         }
     }

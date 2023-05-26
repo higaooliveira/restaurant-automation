@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.adapters.repository.company.CompanyRepository
 import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.dto.UserDtoIn
+import com.higor.restaurantautomation.utils.extensions.objectToJson
 import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -29,6 +30,8 @@ class UserControllerTest : BaseITTest() {
 
     private lateinit var savedUser: User
 
+    private lateinit var secondUser: User
+
     @AfterEach
     fun tearDown() {
         userRepository.deleteAll()
@@ -39,8 +42,38 @@ class UserControllerTest : BaseITTest() {
     fun setup() {
         val company = companyRepository.saveAndFlush(Factory.companyEntity)
         val user = Factory.userEntity
+        val anotherUser = Factory.user
         user.company = company
+        anotherUser.company = company
         savedUser = userRepository.saveAndFlush(user)
+        secondUser = userRepository.saveAndFlush(anotherUser)
+    }
+
+    @Test
+    fun `GET all users should work properly with filters`() {
+        val token = this.generateToken(savedUser)
+
+        println(secondUser.objectToJson())
+        println("$baseEndpoint?email=${secondUser.email}")
+        sendGet(
+            uri = "$baseEndpoint?email=${secondUser.email}",
+            token = token,
+        ).andExpect(status().isOk)
+            .andExpect(jsonPath("$.totalRecords").value(1))
+    }
+
+    @Test
+    fun `GET all users should work properly with no filter`() {
+        val token = this.generateToken(savedUser)
+
+        sendGet(
+            uri = baseEndpoint,
+            token = token,
+        ).andExpect(status().isOk)
+            .andDo {
+                print(it.response.contentAsString)
+            }
+            .andExpect(jsonPath("$.totalRecords").value(2))
     }
 
     @Test
