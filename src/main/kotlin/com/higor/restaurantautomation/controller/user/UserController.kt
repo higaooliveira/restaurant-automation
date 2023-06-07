@@ -10,6 +10,7 @@ import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.DeleteUserService
 import com.higor.restaurantautomation.domain.service.user.GetAllUsersService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
+import com.higor.restaurantautomation.utils.extensions.from
 import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity

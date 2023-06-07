@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.service.company.CompanyExistsService
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService
 import com.higor.restaurantautomation.domain.service.exception.ApiException
+import com.higor.restaurantautomation.utils.extensions.from
 import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

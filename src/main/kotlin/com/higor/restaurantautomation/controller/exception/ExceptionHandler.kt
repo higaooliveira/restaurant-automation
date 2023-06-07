@@ -3,6 +3,7 @@ package com.higor.restaurantautomation.controller.exception
 import com.higor.restaurantautomation.domain.dto.StandardError
 import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
+import com.higor.restaurantautomation.utils.extensions.from
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

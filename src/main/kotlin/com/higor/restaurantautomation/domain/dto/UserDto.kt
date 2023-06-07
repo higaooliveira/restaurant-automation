@@ -1,7 +1,6 @@
 package com.higor.restaurantautomation.domain.dto
 
 import com.higor.restaurantautomation.adapters.entity.Role
-import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.utils.validators.Email
 import jakarta.validation.constraints.NotBlank
 import java.time.Instant
@@ -38,19 +37,7 @@ data class UserDtoOut(
     val createdAt: Instant,
 ) {
 
-    companion object {
-        fun from(other: UserModel): UserDtoOut {
-            return UserDtoOut(
-                id = other.id!!,
-                name = other.name,
-                email = other.email,
-                role = other.role,
-                phone = other.phone,
-                companyId = other.companyId,
-                createdAt = other.createdAt,
-            )
-        }
-    }
+    companion object
 }
 
 data class UsersFilter(

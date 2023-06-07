@@ -6,6 +6,7 @@ import com.higor.restaurantautomation.domain.service.company.CompanyExistsServic
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService
 import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
+import com.higor.restaurantautomation.utils.extensions.toEntity
 import org.springframework.stereotype.Service
 import java.util.UUID
 
