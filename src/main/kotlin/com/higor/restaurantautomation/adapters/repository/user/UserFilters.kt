@@ -1,7 +1,7 @@
 package com.higor.restaurantautomation.adapters.repository.user
 
-import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.adapters.entity.User
+import com.higor.restaurantautomation.domain.model.user.Role
 import org.springframework.data.jpa.domain.Specification
 
 object UserFilters {

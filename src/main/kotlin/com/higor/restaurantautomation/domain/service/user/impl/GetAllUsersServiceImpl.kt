@@ -3,9 +3,9 @@ package com.higor.restaurantautomation.domain.service.user.impl
 import com.higor.restaurantautomation.adapters.repository.user.UserFilters
 import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.domain.dto.PaginationDto
-import com.higor.restaurantautomation.domain.dto.UserDtoOut
-import com.higor.restaurantautomation.domain.dto.UsersFilter
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.dto.user.UserDtoOut
+import com.higor.restaurantautomation.domain.dto.user.UsersFilter
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.domain.service.user.GetAllUsersService
 import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.data.domain.Pageable

@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

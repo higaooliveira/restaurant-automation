@@ -3,7 +3,7 @@ package com.higor.restaurantautomation.configuration
 import com.higor.restaurantautomation.adapters.repository.user.UserRepository
 import com.higor.restaurantautomation.configuration.security.JWTUtil
 import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

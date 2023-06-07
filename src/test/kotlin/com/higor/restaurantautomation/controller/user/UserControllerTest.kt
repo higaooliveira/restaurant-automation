@@ -4,7 +4,7 @@ import com.higor.restaurantautomation.BaseITTest
 import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.adapters.repository.company.CompanyRepository
 import com.higor.restaurantautomation.adapters.repository.user.UserRepository
-import com.higor.restaurantautomation.domain.dto.UserDtoIn
+import com.higor.restaurantautomation.domain.dto.user.UserDtoIn
 import com.higor.restaurantautomation.utils.extensions.objectToJson
 import com.higor.restaurantautomation.utils.factories.Factory
 import org.junit.jupiter.api.AfterEach

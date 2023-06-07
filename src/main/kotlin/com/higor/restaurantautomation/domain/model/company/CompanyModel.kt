@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.domain.model
+package com.higor.restaurantautomation.domain.model.company
 
 import java.time.Instant
 import java.util.UUID

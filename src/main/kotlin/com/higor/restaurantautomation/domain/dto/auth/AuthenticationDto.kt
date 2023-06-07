@@ -1,4 +1,4 @@
-package com.higor.restaurantautomation.domain.dto
+package com.higor.restaurantautomation.domain.dto.auth
 
 import com.higor.restaurantautomation.utils.validators.Email
 import jakarta.validation.constraints.NotBlank

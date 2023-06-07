@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

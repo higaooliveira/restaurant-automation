@@ -1,8 +1,8 @@
 package com.higor.restaurantautomation.utils.extensions
 
 import com.higor.restaurantautomation.adapters.entity.Company
-import com.higor.restaurantautomation.domain.dto.RegisterDto
-import com.higor.restaurantautomation.domain.model.CompanyModel
+import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
+import com.higor.restaurantautomation.domain.model.company.CompanyModel
 
 fun CompanyModel.toEntity(): Company {
     return Company(

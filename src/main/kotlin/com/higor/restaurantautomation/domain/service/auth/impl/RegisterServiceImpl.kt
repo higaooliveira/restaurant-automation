@@ -2,10 +2,10 @@ package com.higor.restaurantautomation.domain.service.auth.impl
 
 import com.higor.restaurantautomation.configuration.security.JWTUtil
 import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
-import com.higor.restaurantautomation.domain.dto.AuthenticationDtoOut
-import com.higor.restaurantautomation.domain.dto.RegisterDto
-import com.higor.restaurantautomation.domain.model.CompanyModel
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.dto.auth.AuthenticationDtoOut
+import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
+import com.higor.restaurantautomation.domain.model.company.CompanyModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.domain.service.auth.RegisterService
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService
 import com.higor.restaurantautomation.domain.service.user.CreateUserService

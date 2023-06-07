@@ -1,6 +1,6 @@
-package com.higor.restaurantautomation.domain.dto
+package com.higor.restaurantautomation.domain.dto.user
 
-import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.domain.model.user.Role
 import com.higor.restaurantautomation.utils.validators.Email
 import jakarta.validation.constraints.NotBlank
 import java.time.Instant

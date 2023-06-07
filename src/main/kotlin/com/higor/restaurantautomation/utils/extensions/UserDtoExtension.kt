@@ -1,7 +1,7 @@
 package com.higor.restaurantautomation.utils.extensions
 
-import com.higor.restaurantautomation.domain.dto.UserDtoOut
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.dto.user.UserDtoOut
+import com.higor.restaurantautomation.domain.model.user.UserModel
 
 fun UserDtoOut.Companion.from(other: UserModel): UserDtoOut {
     return UserDtoOut(

@@ -4,7 +4,7 @@ import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.configuration.BaseITContext
 import com.higor.restaurantautomation.configuration.security.JWTUtil
 import com.higor.restaurantautomation.configuration.security.UserDetailsImpl
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.utils.extensions.from
 import com.higor.restaurantautomation.utils.extensions.objectToJson
 import org.junit.jupiter.api.BeforeEach
