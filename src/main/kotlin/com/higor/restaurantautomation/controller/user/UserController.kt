@@ -1,11 +1,11 @@
 package com.higor.restaurantautomation.controller.user
 
-import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.domain.dto.PaginationDto
-import com.higor.restaurantautomation.domain.dto.UserDtoIn
-import com.higor.restaurantautomation.domain.dto.UserDtoOut
-import com.higor.restaurantautomation.domain.dto.UsersFilter
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.dto.user.UserDtoIn
+import com.higor.restaurantautomation.domain.dto.user.UserDtoOut
+import com.higor.restaurantautomation.domain.dto.user.UsersFilter
+import com.higor.restaurantautomation.domain.model.user.Role
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.DeleteUserService
 import com.higor.restaurantautomation.domain.service.user.GetAllUsersService

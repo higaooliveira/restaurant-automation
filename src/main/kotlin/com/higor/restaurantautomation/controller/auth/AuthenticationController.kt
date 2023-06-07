@@ -1,8 +1,8 @@
 package com.higor.restaurantautomation.controller.auth
 
-import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
-import com.higor.restaurantautomation.domain.dto.AuthenticationDtoOut
-import com.higor.restaurantautomation.domain.dto.RegisterDto
+import com.higor.restaurantautomation.domain.dto.auth.AuthenticationDtoIn
+import com.higor.restaurantautomation.domain.dto.auth.AuthenticationDtoOut
+import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
 import com.higor.restaurantautomation.domain.service.auth.AuthenticationService
 import com.higor.restaurantautomation.domain.service.auth.RegisterService
 import jakarta.validation.Valid

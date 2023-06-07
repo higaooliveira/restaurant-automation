@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.domain.service.user
 
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import java.util.UUID
 
 interface CreateUserService {

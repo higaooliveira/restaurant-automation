@@ -1,6 +1,6 @@
 package com.higor.restaurantautomation.configuration.security
 
-import com.higor.restaurantautomation.adapters.entity.Role
+import com.higor.restaurantautomation.domain.model.user.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod

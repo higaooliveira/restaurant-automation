@@ -1,5 +1,6 @@
 package com.higor.restaurantautomation.adapters.entity
 
+import com.higor.restaurantautomation.domain.model.user.Role
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

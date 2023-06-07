@@ -1,6 +1,5 @@
-package com.higor.restaurantautomation.domain.model
+package com.higor.restaurantautomation.domain.model.user
 
-import com.higor.restaurantautomation.adapters.entity.Role
 import java.time.Instant
 import java.util.UUID
 

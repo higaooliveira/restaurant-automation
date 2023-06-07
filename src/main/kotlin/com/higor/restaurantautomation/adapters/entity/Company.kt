@@ -33,6 +33,9 @@ class Company(
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "company")
     var users: MutableSet<User> = mutableSetOf(),
 
+    @OneToMany(mappedBy = "company", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var products: MutableSet<Product> = mutableSetOf(),
+
     @Column(name = "created_at")
     var createdAt: Instant = Instant.now(),
 

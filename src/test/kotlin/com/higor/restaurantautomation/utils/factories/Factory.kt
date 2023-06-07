@@ -2,13 +2,13 @@ package com.higor.restaurantautomation.utils.factories
 
 import com.github.javafaker.Faker
 import com.higor.restaurantautomation.adapters.entity.Company
-import com.higor.restaurantautomation.adapters.entity.Role
 import com.higor.restaurantautomation.adapters.entity.User
-import com.higor.restaurantautomation.domain.dto.AuthenticationDtoIn
-import com.higor.restaurantautomation.domain.dto.RegisterDto
-import com.higor.restaurantautomation.domain.dto.UserDtoIn
-import com.higor.restaurantautomation.domain.model.CompanyModel
-import com.higor.restaurantautomation.domain.model.UserModel
+import com.higor.restaurantautomation.domain.dto.auth.AuthenticationDtoIn
+import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
+import com.higor.restaurantautomation.domain.dto.user.UserDtoIn
+import com.higor.restaurantautomation.domain.model.company.CompanyModel
+import com.higor.restaurantautomation.domain.model.user.Role
+import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.utils.extensions.toUUID
 import java.util.UUID
 
