@@ -1,7 +1,5 @@
 package com.higor.restaurantautomation.domain.model
 
-import com.higor.restaurantautomation.adapters.entity.Company
-import com.higor.restaurantautomation.domain.dto.RegisterDto
 import java.time.Instant
 import java.util.UUID
 
@@ -14,34 +12,5 @@ data class CompanyModel(
     val updatedAt: Instant? = null,
 ) {
 
-    fun toEntity(): Company {
-        return Company(
-            id = id,
-            socialName = socialName,
-            fantasyName = fantasyName,
-            document = document,
-            createdAt = createdAt,
-        )
-    }
-
-    companion object {
-
-        fun from(other: Company): CompanyModel {
-            return CompanyModel(
-                id = other.id!!,
-                socialName = other.socialName,
-                fantasyName = other.fantasyName,
-                document = other.document,
-                createdAt = other.createdAt,
-            )
-        }
-
-        fun from(other: RegisterDto): CompanyModel {
-            return CompanyModel(
-                socialName = other.socialName,
-                fantasyName = other.fantasyName,
-                document = other.document,
-            )
-        }
-    }
+    companion object
 }

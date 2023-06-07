@@ -10,6 +10,7 @@ import com.higor.restaurantautomation.domain.service.auth.RegisterService
 import com.higor.restaurantautomation.domain.service.company.CreateCompanyService
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
+import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional

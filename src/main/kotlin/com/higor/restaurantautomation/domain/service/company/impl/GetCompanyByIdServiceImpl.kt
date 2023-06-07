@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.domain.model.CompanyModel
 import com.higor.restaurantautomation.domain.service.company.GetCompanyByIdService
 import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
+import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -18,7 +19,7 @@ class GetCompanyByIdServiceImpl(
     override fun execute(id: UUID): CompanyModel {
         return companyRepository
             .findById(id)
-            .map(CompanyModel::from)
+            .map(CompanyModel.Companion::from)
             .orElseThrow {
                 ApiException(ApiErrorCodes.COMPANY_NOT_FOUND)
             }

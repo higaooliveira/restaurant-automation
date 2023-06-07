@@ -5,6 +5,7 @@ import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.GetUserByIdService
+import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

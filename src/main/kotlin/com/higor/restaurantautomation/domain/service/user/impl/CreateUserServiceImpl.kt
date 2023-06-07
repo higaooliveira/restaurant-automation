@@ -7,11 +7,12 @@ import com.higor.restaurantautomation.domain.service.exception.ApiErrorCodes
 import com.higor.restaurantautomation.domain.service.exception.ApiException
 import com.higor.restaurantautomation.domain.service.user.CreateUserService
 import com.higor.restaurantautomation.domain.service.user.UserExistsService
+import com.higor.restaurantautomation.utils.extensions.toEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
-@Service
+@Service("nehkahkjs")
 class CreateUserServiceImpl(
     private val repository: UserRepository,
     private val userExistsService: UserExistsService,

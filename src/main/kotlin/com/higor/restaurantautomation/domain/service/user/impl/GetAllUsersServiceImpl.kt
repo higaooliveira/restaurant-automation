@@ -7,6 +7,7 @@ import com.higor.restaurantautomation.domain.dto.UserDtoOut
 import com.higor.restaurantautomation.domain.dto.UsersFilter
 import com.higor.restaurantautomation.domain.model.UserModel
 import com.higor.restaurantautomation.domain.service.user.GetAllUsersService
+import com.higor.restaurantautomation.utils.extensions.from
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
