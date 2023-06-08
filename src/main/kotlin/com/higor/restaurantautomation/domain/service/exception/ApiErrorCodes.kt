@@ -36,4 +36,10 @@ enum class ApiErrorCodes(
         key = "bad.request",
         httpStatus = HttpStatus.BAD_REQUEST,
     ),
+
+    PRODUCT_NOT_FOUND(
+        code = "PROD-0000",
+        key = "product.not.found",
+        httpStatus = HttpStatus.NOT_FOUND,
+    ),
 }

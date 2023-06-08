@@ -3,6 +3,7 @@ package com.higor.restaurantautomation.utils.extensions
 import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
 import com.higor.restaurantautomation.domain.dto.user.UserDtoIn
+import com.higor.restaurantautomation.domain.dto.user.UserDtoOut
 import com.higor.restaurantautomation.domain.model.company.CompanyModel
 import com.higor.restaurantautomation.domain.model.user.Role
 import com.higor.restaurantautomation.domain.model.user.UserModel
@@ -58,5 +59,17 @@ fun UserModel.Companion.from(other: RegisterDto, companyId: UUID): UserModel {
         phone = other.phone,
         companyId = companyId,
         createdAt = Instant.now(),
+    )
+}
+
+fun UserDtoOut.Companion.from(other: UserModel): UserDtoOut {
+    return UserDtoOut(
+        id = other.id!!,
+        name = other.name,
+        email = other.email,
+        role = other.role,
+        phone = other.phone,
+        companyId = other.companyId,
+        createdAt = other.createdAt,
     )
 }
