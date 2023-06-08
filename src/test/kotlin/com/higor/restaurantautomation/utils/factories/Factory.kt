@@ -2,11 +2,13 @@ package com.higor.restaurantautomation.utils.factories
 
 import com.github.javafaker.Faker
 import com.higor.restaurantautomation.adapters.entity.Company
+import com.higor.restaurantautomation.adapters.entity.Product
 import com.higor.restaurantautomation.adapters.entity.User
 import com.higor.restaurantautomation.domain.dto.auth.AuthenticationDtoIn
 import com.higor.restaurantautomation.domain.dto.auth.RegisterDto
 import com.higor.restaurantautomation.domain.dto.user.UserDtoIn
 import com.higor.restaurantautomation.domain.model.company.CompanyModel
+import com.higor.restaurantautomation.domain.model.product.ProductType
 import com.higor.restaurantautomation.domain.model.user.Role
 import com.higor.restaurantautomation.domain.model.user.UserModel
 import com.higor.restaurantautomation.utils.extensions.toUUID
@@ -132,6 +134,17 @@ object Factory {
             password = faker.internet().password(),
             role = Role.USER,
             phone = faker.phoneNumber().cellPhone(),
+        )
+    }
+
+    val productEntity: Product by lazy {
+        Product(
+            id = "52f14231-9aa3-4bc5-aab8-9218e87d6d25".toUUID(),
+            name = faker.commerce().productName(),
+            description = faker.commerce().department(),
+            price = faker.commerce().price().toDouble().toLong(),
+            company = companyEntity,
+            type = ProductType.FOOD,
         )
     }
 }
